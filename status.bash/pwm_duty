@@ -1,0 +1,8 @@
+if [ -f /sys/class/hwmon/hwmon1/pwm1 ] ; then
+	echo -n "/sys/class/hwmon/hwmon1/pwm1: "
+	sudo cat /sys/class/hwmon/hwmon1/pwm1
+fi
+if [ -f /sys/class/hwmon/hwmon2/pwm1 ] ; then
+	echo -n "/sys/class/hwmon/hwmon2/pwm1: "
+	sudo cat /sys/class/hwmon/hwmon2/pwm1
+fi

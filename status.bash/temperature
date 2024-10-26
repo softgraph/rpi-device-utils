@@ -1,0 +1,4 @@
+if [ -f /sys/class/thermal/thermal_zone0/temp ] ; then
+	echo -n "/sys/class/thermal/thermal_zone0/temp: "
+	cat      /sys/class/thermal/thermal_zone0/temp
+fi

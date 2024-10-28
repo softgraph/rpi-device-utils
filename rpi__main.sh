@@ -6,33 +6,27 @@
 # [USAGE]
 # - `function begin_proc { ... }` # called as `begin_proc`
 # - `function end_proc { ... }`   # called as `end_proc`
-# - `function do_proc { ... }`    # called as `do_proc ${host} ${user} $*`
+# - `function do_proc { ... }`    # called as `do_proc ${target} $*`
 # - `source rpi__main.sh`
 #---------------------------------------
 
 set -u
 
-hosts=''
-user='pi'
+targets=''
 
-for i in {1..2} ; do
-	if [ $# -ge 2 ] && [ $1 = '-h' ] ; then
-		hosts=$2
-		shift 2
-    elif [ $# -ge 2 ] && [ $1 = '-u' ] ; then
-        user=$2
-        shift 2
-    fi
-done
+if [ $# -ge 2 ] && [ $1 = '-t' ] ; then
+    targets=$2
+    shift 2
+fi
 
-if [ -z ${hosts} ] ; then
-    hosts=`cat hosts`
+if [ -z ${targets} ] ; then
+    targets=`cat targets`
 fi
 
 begin_proc
 
-for host in ${hosts} ; do
-    do_proc ${host} ${user} $*
+for target in ${targets} ; do
+    do_proc ${target} $*
 done
 
 end_proc

@@ -1,10 +1,17 @@
 #! /bin/bash
 
+#---------------------------------------
+# Run `ping` for hosts.
+#
 # [USAGE]
-# - `rpi_ping.sh`
-#   - Run `ping` to `hosts`.
-# - `rpi_ping.sh -h HOSTNAME`
-#   - Run `ping` to HOSTNAME.
+#   - `./rpi_ping.sh [OPTIONS]`
+#
+# [OPTIONS]
+#   - `-t HOSTNAME`
+#     or
+#     `-t USER@HOSTNAME`
+#   - If `-t` option is not specified, `targets` file is used instead.
+#---------------------------------------
 
 set -u
 
@@ -17,10 +24,11 @@ function end_proc {
 }
 
 function do_proc {
-    if [ $# -ge 1 ] ; then
-        host=$1
-        echo "--- $1 ping ---"
-        ping -c 3 -q $1 | grep -v -e '^$'
+    if [ $# -eq 1 ] ; then
+        target=$1
+        host=${target#*@}
+        echo "--- ${host} ping ---"
+        ping -c 3 -q ${host} | grep -v -e '^$'
     fi
 }
 

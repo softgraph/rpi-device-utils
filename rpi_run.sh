@@ -3,18 +3,18 @@
 #---------------------------------------
 # Run a command on hosts.
 #
-# [EXAMPLE]
-#   - `rpi_run.sh ls -l`
-#   - `rpi_run.sh -u pi -h rpi-1.local ls -l`
-#
 # [USAGE]
-#   - `rpi_run.sh [OPTIONS] COMMAND ...`
+#   - `./rpi_run.sh [OPTIONS] COMMAND ...`
 #
 # [OPTIONS]
-#   - `-h HOSTNAME`
-#     - Hostnames given by `cat hosts` are used if no option is given.
-#   - `-u USER`
-#     - User `pi` is used if no option is given.
+#   - `-t HOSTNAME`
+#     or
+#     `-t USER@HOSTNAME`
+#   - If `-t` option is not specified, `targets` file is used instead.
+#
+# [EXAMPLE]
+#   - `./rpi_run.sh ls -l`
+#   - `./rpi_run.sh -t pi@rpi-1.local ls -l`
 #---------------------------------------
 
 set -u
@@ -28,13 +28,12 @@ function end_proc {
 }
 
 function do_proc {
-    if [ $# -ge 3 ]
+    if [ $# -ge 2 ]
     then
-        host=$1
-        user=$2
-        shift 2
-        echo "--- ${user}@${host} ---"
-        ssh ${user}@${host} $*
+        target=$1
+        shift
+        echo "--- ${target} ---"
+        ssh ${target} $*
     fi
 }
 

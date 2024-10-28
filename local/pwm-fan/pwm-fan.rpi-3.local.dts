@@ -1,0 +1,168 @@
+/*-------------------------------------*
+ * Device Tree Overlay for PWM Fan Control
+ *
+ * [USAGE]
+ * - `/boot/firmware/config.txt`
+ *   - `dtoverlay=pwm-fan`
+ *-------------------------------------*/
+
+/dts-v1/; // DTS Ver. 1
+/plugin/;
+
+#include <dt-bindings/pinctrl/bcm2835.h> // BCM2835_FSEL_ALT5
+
+/*-------------------------------------*
+ * The root node declares the following node.
+ *   - `/` (compatible with "brcm,bcm2835")
+ *-------------------------------------*/
+
+/ {
+	compatible = "brcm,bcm2835";
+
+	/*-------------------------------------*
+	 * `fragment@0` declares an overlay for `&gpio/` and the following subnode.
+	 *   - `&gpio/` = e.g., `/soc/gpio@7e200000/`
+	 *   - `&gpio/pwm-pins/`
+	 * The following phandle is referenced by `fragment@1`.
+	 *   - `&pwm_pins`
+	 *-------------------------------------*/
+
+	fragment@0 {
+		target = <&gpio>;
+		__overlay__ {
+			pwm_pins: pwm-pins {
+				brcm,pins = <18>;
+				brcm,function = <BCM2835_FSEL_ALT5>;
+				brcm,pull = <0>;
+			};
+		};
+	};
+
+	/*-------------------------------------*
+	 * `fragment@1` declares an overlay for the following node.
+	 *   - `&pwm/` = e.g., `/soc/pwm@7e20c000/`
+	 * The following phandle is referenced by `fragment@2`.
+	 *   - `&pwm`
+	 *-------------------------------------*/
+
+	fragment@1 {
+		target = <&pwm>;
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <&pwm_pins>;
+			assigned-clock-rates = <100000000>;	// in Hz
+			status = "okay";
+		};
+	};
+
+	/*-------------------------------------*
+	 * `fragment@2` declares an overlay for `/` and the following subnode.
+	 *   - `/`
+	 *   - `/pwm-fan/` (compatible with "pwm-fan")
+	 * The following phandle is referenced by `fragment@5`.
+	 *   - `&pwm_fan`
+	 *-------------------------------------*/
+
+	fragment@2 {
+		target-path = "/";
+		__overlay__ {
+			pwm_fan: pwm-fan {
+				compatible = "pwm-fan";
+				#cooling-cells = <2>;
+				pwms = <&pwm 0 10000000 0>;	// in ns
+				cooling-min-state = <0>;
+				cooling-max-state = <4>;
+				cooling-levels = <0 160 190 220 250>; // 0-255 for each cooling state
+				/*
+				[Low]
+				cooling-levels = <0 70 130 190 250>; // 0-255 for each cooling state
+				[High]
+				cooling-levels = <0 160 190 220 250>; // 0-255 for each cooling state
+				*/
+			};
+		};
+	};
+
+	/*-------------------------------------*
+	 * `fragment@3` declares an overlay for the following node.
+	 *   - `&cpu_thermal/` = `/thermal-zones/cpu-thermal/`
+	 *-------------------------------------*/
+
+	fragment@3 {
+		target = <&cpu_thermal>;
+		__overlay__ {
+			polling-delay = <2000>; // in milliseconds
+		};
+	};
+
+	/*-------------------------------------*
+	 * `fragment@4` declares an overlay for `&thermal_trips` and the following subnodes.
+	 *   - `&thermal_trips/` = `/thermal-zones/cpu-thermal/trips/`
+	 *   - `&thermal_trips/trip0/`
+	 *   - `&thermal_trips/trip1/`
+	 *   - `&thermal_trips/trip2/`
+	 *   - `&thermal_trips/trip3/`
+	 * The following phandles are referenced by `fragment@5`.
+	 *   - `&trip0`
+	 *   - `&trip1`
+	 *   - `&trip2`
+	 *   - `&trip3`
+	 *-------------------------------------*/
+
+	fragment@4 {
+		target = <&thermal_trips>;
+		__overlay__ {
+			trip0: trip0 {
+				temperature = <40000>;
+				hysteresis = <2000>;
+				type = "active";
+			};
+			trip1: trip1 {
+				temperature = <45000>;
+				hysteresis = <2000>;
+				type = "active";
+			};
+			trip2: trip2 {
+				temperature = <50000>;
+				hysteresis = <2000>;
+				type = "active";
+			};
+			trip3: trip3 {
+				temperature = <55000>;
+				hysteresis = <5000>;
+				type = "active";
+			};
+		};
+	};
+
+	/*-------------------------------------*
+	 * `fragment@5` declares an overlay for `&cooling_maps` and the following subnodes.
+	 *   - `&cooling_maps/` = `/thermal-zones/cpu-thermal/cooling-maps/`
+	 *   - `&cooling_maps/map0/`
+	 *   - `&cooling_maps/map1/`
+	 *   - `&cooling_maps/map2/`
+	 *   - `&cooling_maps/map3/`
+	 *-------------------------------------*/
+
+	fragment@5 {
+		target = <&cooling_maps>;
+		__overlay__ {
+			map0 {
+				trip = <&trip0>;
+				cooling-device = <&pwm_fan 0 1>;
+			};
+			map1 {
+				trip = <&trip1>;
+				cooling-device = <&pwm_fan 1 2>;
+			};
+			map2 {
+				trip = <&trip2>;
+				cooling-device = <&pwm_fan 2 3>;
+			};
+			map3 {
+				trip = <&trip3>;
+				cooling-device = <&pwm_fan 3 4>;
+			};
+		};
+	};
+};

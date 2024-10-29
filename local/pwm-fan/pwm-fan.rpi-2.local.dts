@@ -2,8 +2,12 @@
  * Device Tree Overlay for PWM Fan Control
  *
  * [USAGE]
- * - `/boot/firmware/config.txt`
+ * - /boot/firmware/config.txt
  *   - `dtoverlay=pwm-fan`
+ *
+ * [REFERENCE]
+ * - rpi_doc/configuration/device-tree.md
+ *   <https://github.com/pickfire/rpi_doc/blob/master/configuration/device-tree.md>
  *-------------------------------------*/
 
 /dts-v1/; // DTS Ver. 1

@@ -1,5 +1,5 @@
 /*-------------------------------------*
- * Device Tree Overlay for PWM Fan Control
+ * Device Tree overlay to control PWM Fan
  *
  * [USAGE]
  * - /boot/firmware/config.txt
@@ -20,7 +20,7 @@
 	compatible = "brcm,bcm2835";
 
 	/*-------------------------------------*
-	 * `fragment@0` declares an overlay for `&gpio/` and the following subnode.
+	 * `fragment@0` declares an overlay of `&gpio/` and adds the following subnode.
 	 *   - `&gpio/` = e.g., `/soc/gpio@7e200000/`
 	 *   - `&gpio/pwm-pins/`
 	 * The following phandle is referenced by `fragment@1`.
@@ -39,7 +39,7 @@
 	};
 
 	/*-------------------------------------*
-	 * `fragment@1` declares an overlay for the following node.
+	 * `fragment@1` declares an overlay of the following node.
 	 *   - `&pwm/` = e.g., `/soc/pwm@7e20c000/`
 	 * The following phandle is referenced by `fragment@2`.
 	 *   - `&pwm`
@@ -56,7 +56,7 @@
 	};
 
 	/*-------------------------------------*
-	 * `fragment@2` declares an overlay for `/` and the following subnode.
+	 * `fragment@2` declares an overlay of `/` and adds the following subnode.
 	 *   - `/`
 	 *   - `/pwm-fan/` (compatible with "pwm-fan")
 	 * The following phandle is referenced by `fragment@5`.
@@ -84,7 +84,7 @@
 	};
 
 	/*-------------------------------------*
-	 * `fragment@3` declares an overlay for the following node.
+	 * `fragment@3` declares an overlay of the following node.
 	 *   - `&cpu_thermal/` = `/thermal-zones/cpu-thermal/`
 	 *-------------------------------------*/
 
@@ -96,7 +96,7 @@
 	};
 
 	/*-------------------------------------*
-	 * `fragment@4` declares an overlay for `&thermal_trips` and the following subnodes.
+	 * `fragment@4` declares an overlay of `&thermal_trips` and adds the following subnodes.
 	 *   - `&thermal_trips/` = `/thermal-zones/cpu-thermal/trips/`
 	 *   - `&thermal_trips/trip0/`
 	 *   - `&thermal_trips/trip1/`
@@ -136,7 +136,7 @@
 	};
 
 	/*-------------------------------------*
-	 * `fragment@5` declares an overlay for `&cooling_maps` and the following subnodes.
+	 * `fragment@5` declares an overlay of `&cooling_maps` and adds the following subnodes.
 	 *   - `&cooling_maps/` = `/thermal-zones/cpu-thermal/cooling-maps/`
 	 *   - `&cooling_maps/map0/`
 	 *   - `&cooling_maps/map1/`

@@ -30,10 +30,10 @@ function do_proc {
         host=${target#*@}
         if [ -f local/oled-mon/oled-mon.${host}.py ] ; then
             echo "--- ${target} ---"
-            ssh ${target} "mkdir -p local/oled-mon && pkill -f '/home/pi/venv/luma/bin/python oled-mon.py'"
+            ssh ${target} "mkdir -p local/oled-mon && pkill -f '/home/pi/venv/luma/bin/python local/oled-mon/oled-mon.py'"
             scp local/oled-mon/demo_opts.py        ${target}:local/oled-mon/
             scp local/oled-mon/oled-mon.${host}.py ${target}:local/oled-mon/oled-mon.py
-            ssh ${target} "cd local/oled-mon && ~/venv/luma/bin/python oled-mon.py --display ssd1306 --width 128 --height 32 --interface spi --spi-bus-speed=32000000"
+            ssh ${target} "~/venv/luma/bin/python local/oled-mon/oled-mon.py &"
         fi
     fi
 }

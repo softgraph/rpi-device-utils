@@ -1,0 +1,3 @@
+vcgencmd get_throttled
+vcgencmd measure_clock arm
+vcgencmd measure_temp

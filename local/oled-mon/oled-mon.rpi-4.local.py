@@ -21,6 +21,7 @@
 #     - SCL: BSC1 SCL (BCM 3)
 #----------------------------------------
 
+from collections import deque
 import datetime
 import time
 
@@ -32,14 +33,23 @@ def device():
     return get_device(actual_args=['--display=ssd1306', '--width=128', '--height=32', '--rotate=2', '--interface=i2c'])
 
 def main():
-    latest_date = ""
+    deque_temp = deque([],maxlen=128)
     while True:
         now = datetime.datetime.now()
-        date = now.strftime("%Y.%m.%d %H:%M:%S")
-        if latest_date != date:
-            latest_date = date
-            with canvas(device) as draw:
-                draw.text((0, 0), date, fill="white")
+        str_time = now.strftime("%H:%M:%S")
+        with open('/sys/class/thermal/thermal_zone0/temp') as f:
+            temp = int(f.read())
+        deque_temp.append(temp)
+        with canvas(device) as dc:
+            dc.text((84, 0), str_time, fill="white")
+            dc.text((0, 0), "{:.2f} °C".format(temp / 1000), fill="white")
+            x = 0
+            for temp in deque_temp:
+                y = - int(temp / 1000) + 66
+                if y < 0: y = 0
+                elif y > 31: y = 31
+                dc.point((x,y), fill="white")
+                x += 1
         time.sleep(1)
 
 if __name__ == "__main__":

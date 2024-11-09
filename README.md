@@ -28,4 +28,6 @@ A collection of utilities used to manage Raspberry Pi devices.
   - [`rpi_run.sh`](<rpi_run.sh>)
 - Setup Device
   - [`rpi_setup_pwm-fan.sh`](<rpi_setup_pwm-fan.sh>)
+    - <a href=local/pwm-fan>local/pwm-fan/</a>
   - [`rpi_setup_oled-mon.sh`](<rpi_setup_oled-mon.sh>)
+    - <a href=local/oled-mon>local/oled-mon/</a>

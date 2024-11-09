@@ -9,6 +9,6 @@
 
 ## Pin Functions
 
-- [BCM2835](<gpio/bcm2835.csv>)
-- [BCM2711](<gpio/bcm2711.csv>)
-- [BCM2712](<gpio/bcm2712.csv>)
+- [`$ pinctrl -c bcm2835`](<gpio/bcm2835.csv>)
+- [`$ pinctrl -c bcm2711`](<gpio/bcm2711.csv>)
+- [`$ pinctrl -c bcm2712`](<gpio/bcm2712.csv>)

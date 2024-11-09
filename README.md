@@ -2,6 +2,18 @@
 
 A collection of utilities used to manage Raspberry Pi devices.
 
+## Requirements
+
+### Host
+
+- `bash`
+- `ssh`
+- `dscacheutil` (for `rpi_show_address.sh` only)
+
+### Target
+
+- Raspberry Pi OS
+
 ## Preparation
 
 - Run `. _prepare.sh`.

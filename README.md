@@ -22,12 +22,12 @@ A collection of utilities used to manage Raspberry Pi devices.
   - [`rpi_show_status.sh`](<rpi_show_status.sh>)
     - <a href=status.bash>status.bash/</a>
   - [`rpi_get_info.sh`](<rpi_get_info.sh>)
-    - <a href=info.txt.bash>info.txt.bash/</a>
-    - <a href=info.csv.bash>info.csv.bash/</a>
+    - <a href=info.txt.bash>`info.txt.bash/`</a>
+    - <a href=info.csv.bash>`info.csv.bash/`</a>
 - Run Command on Device
   - [`rpi_run.sh`](<rpi_run.sh>)
 - Setup Device
   - [`rpi_setup_pwm-fan.sh`](<rpi_setup_pwm-fan.sh>)
-    - <a href=local/pwm-fan>local/pwm-fan/</a>
+    - <a href=local/pwm-fan>`local/pwm-fan/`</a>
   - [`rpi_setup_oled-mon.sh`](<rpi_setup_oled-mon.sh>)
-    - <a href=local/oled-mon>local/oled-mon/</a>
+    - <a href=local/oled-mon>`local/oled-mon/`</a>

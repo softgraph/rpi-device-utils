@@ -8,7 +8,7 @@ A collection of utilities used to manage Raspberry Pi devices.
 
 - `bash`
 - `ssh`
-- `dscacheutil` (for `rpi_show_address.sh` only)
+- `dscacheutil` - optional (only for `rpi_show_address.sh`)
 
 ### Target
 

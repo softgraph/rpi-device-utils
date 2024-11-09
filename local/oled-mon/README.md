@@ -11,7 +11,7 @@
 ## Source Code
 
 - Here are examples.
-  - SSD1305 display driver connected via SPI
+  - 128x32 OLED Display with SSD1305 display driver connected via SPI
     - [oled-mon.rpi-1.local.py](oled-mon.rpi-1.local.py)
-  - SSD1306 display driver connected via I2C
+  - 128x32 OLED Display with SSD1306 display driver connected via I2C
     - [oled-mon.rpi-4.local.py](oled-mon.rpi-4.local.py)

@@ -54,9 +54,3 @@ $ ~/venv/luma/bin/python -m pip install --upgrade Pillow
 $ ~/venv/luma/bin/python -m pip install --upgrade luma.oled
 :
 ```
-
-## Notes
-
-- `github.com`
-  - issues
-    - [SSD1305 controller with 128x32 display issue](<https://github.com/rm-hull/luma.oled/issues/309>)

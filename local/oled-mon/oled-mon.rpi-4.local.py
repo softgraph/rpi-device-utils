@@ -32,7 +32,7 @@ def device():
     # [SSD1306] get device
     return get_device(actual_args=['--display=ssd1306', '--width=128', '--height=32', '--rotate=2', '--interface=i2c'])
 
-def main():
+def monitor():
     deque_temp = deque([],maxlen=128)
     while True:
         now = datetime.datetime.now()
@@ -55,6 +55,6 @@ def main():
 if __name__ == "__main__":
     try:
         device = device()
-        main()
+        monitor()
     except KeyboardInterrupt:
         pass

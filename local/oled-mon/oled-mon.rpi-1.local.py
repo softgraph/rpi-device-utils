@@ -21,6 +21,10 @@
 #     - CS:  SPI0 CE0  (BCM 8)  # Chip selection, low active
 #     - DC:  GPIO 24   (BCM 24) # Data/Command selection (high for data, low for command)
 #     - RST: GPIO 25   (BCM 25) # Reset, low active
+#
+# [TECHNICAL NOTE]
+# - SSD1305 controller with 128x32 display issue
+#   <https://github.com/rm-hull/luma.oled/issues/309>
 #----------------------------------------
 
 from collections import deque
@@ -42,7 +46,7 @@ def device():
     device._colend += 4   # 128 -> 132
     return device
 
-def main():
+def monitor():
     deque_temp = deque([],maxlen=128)
     while True:
         now = datetime.datetime.now()
@@ -65,6 +69,6 @@ def main():
 if __name__ == "__main__":
     try:
         device = device()
-        main()
+        monitor()
     except KeyboardInterrupt:
         pass

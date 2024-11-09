@@ -9,10 +9,13 @@
 ## Source Code
 
 - Here are examples. They are almost the same except for parameters.
-  - 3-pin PWM Fan connected to 5V, GND and GPIO 18
+  - 3-pin PWM Fan connected to 5V, GND and GPIO 18 (PWM0 or PWM0_0)
     - [pwm-fan.rpi-2.local.dts](./pwm-fan.rpi-2.local.dts)
     - [pwm-fan.rpi-3.local.dts](./pwm-fan.rpi-3.local.dts)
     - [pwm-fan.rpi-4.local.dts](./pwm-fan.rpi-4.local.dts)
+
+- See also:
+  - [Raspberry Pi GPIO](<../../Raspberry Pi/gpio.md>)
 
 ## Technical Notes
 

@@ -72,9 +72,9 @@
 				pwms = <&pwm 0 10000000 0>;	// in ns
 				cooling-min-state = <0>;
 				cooling-max-state = <4>;
-				cooling-levels = <0 70 130 190 250>; // 0-255 for each cooling state
+				cooling-levels = <0  70 130 190 250>; // 0-255 for each cooling state
 				/*
-				cooling-levels = <0 70 130 190 250>; // 0-255 for each cooling state
+				cooling-levels = <0  70 130 190 250>; // 0-255 for each cooling state
 				cooling-levels = <0 100 150 200 250>; // 0-255 for each cooling state
 				cooling-levels = <0 130 170 210 250>; // 0-255 for each cooling state
 				cooling-levels = <0 160 190 220 250>; // 0-255 for each cooling state
@@ -113,23 +113,23 @@
 		target = <&thermal_trips>;
 		__overlay__ {
 			trip0: trip0 {
-				temperature = <42000>;
+				temperature = <45000>;
 				hysteresis = <2000>;
 				type = "active";
 			};
 			trip1: trip1 {
-				temperature = <46000>;
-				hysteresis = <2000>;
-				type = "active";
-			};
-			trip2: trip2 {
 				temperature = <50000>;
 				hysteresis = <2000>;
 				type = "active";
 			};
-			trip3: trip3 {
+			trip2: trip2 {
 				temperature = <55000>;
-				hysteresis = <5000>;
+				hysteresis = <2000>;
+				type = "active";
+			};
+			trip3: trip3 {
+				temperature = <60000>;
+				hysteresis = <2000>;
 				type = "active";
 			};
 		};

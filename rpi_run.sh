@@ -7,10 +7,10 @@
 #   - `./rpi_run.sh [OPTIONS] COMMAND ...`
 #
 # [OPTIONS]
-#   - `-t HOSTNAME`
+#   - `-s TAGETS_FILE`
 #     or
 #     `-t USER@HOSTNAME`
-#   - If `-t` option is not specified, `targets` file is used instead.
+#   - If neither `-s` or `-t` is given, `targets` file is used instead.
 #
 # [EXAMPLE]
 #   - `./rpi_run.sh ls -l`

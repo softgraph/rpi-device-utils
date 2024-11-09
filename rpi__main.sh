@@ -19,7 +19,12 @@ if [ $# -ge 2 ] && [ $1 = '-t' ] ; then
     shift 2
 fi
 
-if [ -z ${targets} ] ; then
+if [ $# -ge 2 ] && [ $1 = '-s' ] ; then
+    targets=`cat $2`
+    shift 2
+fi
+
+if [ "${targets}" = '' ] ; then
     targets=`cat targets`
 fi
 

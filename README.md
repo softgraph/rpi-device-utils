@@ -41,5 +41,9 @@ A collection of utilities used to manage Raspberry Pi devices.
 - Setup Device
   - [`rpi_setup_pwm-fan.sh`](<rpi_setup_pwm-fan.sh>)
     - <a href="local/pwm-fan">`local/pwm-fan/`</a>
+    - See also:
+      - [README.md](<local/pwm-fan/README.md>)
   - [`rpi_setup_oled-mon.sh`](<rpi_setup_oled-mon.sh>)
     - <a href="local/oled-mon">`local/oled-mon/`</a>
+    - See also:
+      - [README.md](<local/oled-mon/README.md>)

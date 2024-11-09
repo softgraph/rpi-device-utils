@@ -1,14 +1,6 @@
-# Device Tree overlay to control PWM Fan
+# Thermal Management
 
-## Device Trees, overlays, and parameters
-
-- See:
-  - raspberrypi.com
-    - Raspberry Pi Documentation
-      - [Configuration](<https://www.raspberrypi.com/documentation/computers/configuration.html>)
-        - [Device Trees, overlays, and parameters](<https://www.raspberrypi.com/documentation/computers/configuration.html#device-trees-overlays-and-parameters>)
-
-## Thermal Management
+## Thermal Management System in Devicetree
 
 - Thermal management is achieved in devicetree by describing the sensor hardware and the software abstraction of cooling devices and thermal zones required to take appropriate action to mitigate thermal overloads.
 

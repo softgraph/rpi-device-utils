@@ -3,10 +3,14 @@
 #----------------------------------------
 # OLED Monitor
 #
+# [USAGE]
+# - `python oled_mon.py &`
+#
 # [HARDWARE]
 # - Display Module
-#   - 0.9 inch 128x32 OLED For Raspberry Pi
-#     <https://www.adafruit.com/product/3527>
+#   - Clone of
+#     - 0.9 inch 128x32 OLED For Raspberry Pi
+#       <https://www.adafruit.com/product/3527>
 # - Display Driver
 #   - SSD1306
 #     <https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf>

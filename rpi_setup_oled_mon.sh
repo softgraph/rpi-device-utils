@@ -1,10 +1,10 @@
 #! /bin/bash
 
 #---------------------------------------
-# Setup `oled-mon` on hosts.
+# Setup `~/local/oled-mon/oled_mon.py` on hosts.
 #
 # [USAGE]
-#   - `./rpi_setup_oled-mon.sh [OPTIONS]`
+#   - `./rpi_setup_oled_mon.sh [OPTIONS]`
 #
 # [OPTIONS]
 #   - `-s TAGETS_FILE`
@@ -28,12 +28,12 @@ function do_proc {
     then
         target=$1
         host=${target#*@}
-        if [ -f local/oled-mon/oled-mon.${host}.py ] ; then
+        if [ -f local/oled-mon/oled_mon.${host}.py ] ; then
             echo "--- ${target} ---"
-            ssh ${target} "mkdir -p local/oled-mon && pkill -f '/home/pi/venv/luma/bin/python local/oled-mon/oled-mon.py'"
+            ssh ${target} "mkdir -p local/oled-mon && pkill -f '/home/pi/venv/luma/bin/python local/oled-mon/oled_mon.py'"
             scp local/oled-mon/demo_opts.py        ${target}:local/oled-mon/
-            scp local/oled-mon/oled-mon.${host}.py ${target}:local/oled-mon/oled-mon.py
-            ssh ${target} "~/venv/luma/bin/python local/oled-mon/oled-mon.py > /dev/null 2>&1 & ps -e -o pid,cmd | grep -v 'grep' | grep 'oled-mon.py'"
+            scp local/oled-mon/oled_mon.${host}.py ${target}:local/oled-mon/oled_mon.py
+            ssh ${target} "~/venv/luma/bin/python local/oled-mon/oled_mon.py > /dev/null 2>&1 & ps -e -o pid,cmd | grep -v 'grep' | grep 'oled_mon.py'"
         fi
     fi
 }

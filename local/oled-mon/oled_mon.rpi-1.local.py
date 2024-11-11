@@ -3,6 +3,9 @@
 #----------------------------------------
 # OLED Monitor
 #
+# [USAGE]
+# - `python oled_mon.py &`
+#
 # [HARDWARE]
 # - Display Module
 #   - 128×32, 2.23inch OLED display HAT for Raspberry Pi
@@ -22,9 +25,10 @@
 #     - DC:  GPIO 24   (BCM 24) # Data/Command selection (high for data, low for command)
 #     - RST: GPIO 25   (BCM 25) # Reset, low active
 #
-# [TECHNICAL NOTE]
-# - SSD1305 controller with 128x32 display issue
-#   <https://github.com/rm-hull/luma.oled/issues/309>
+# [NOTE for SSD1305]
+# - See:
+#   - SSD1305 controller with 128x32 display issue
+#     <https://github.com/rm-hull/luma.oled/issues/309>
 #----------------------------------------
 
 from collections import deque

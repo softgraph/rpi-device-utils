@@ -33,7 +33,8 @@ function do_proc {
             ssh ${target} "mkdir -p local/oled-mon && pkill -f '/home/pi/venv/luma/bin/python local/oled-mon/oled_mon.py'"
             scp local/oled-mon/demo_opts.py        ${target}:local/oled-mon/
             scp local/oled-mon/oled_mon.${host}.py ${target}:local/oled-mon/oled_mon.py
-            ssh ${target} "~/venv/luma/bin/python local/oled-mon/oled_mon.py > /dev/null 2>&1 & ps -e -o pid,cmd | grep -v 'grep' | grep 'oled_mon.py'"
+            ssh ${target} "nohup ~/venv/luma/bin/python local/oled-mon/oled_mon.py > /dev/null 2>&1 < /dev/null &"
+            ssh ${target} "ps -e -o pid,ppid,cmd | grep -v 'grep' | egrep ' PPID |oled_mon.py'"
         fi
     fi
 }

@@ -1,10 +1,10 @@
 #! /bin/bash
 
 #---------------------------------------
-# Setup `pwm-fan` on hosts.
+# Setup `/boot/firmware/overlays/pwm-fan.dtbo` on hosts.
 #
 # [USAGE]
-#   - `./rpi_setup_pwm-fan.sh [OPTIONS]`
+#   - `./rpi_setup_pwm_fan.sh [OPTIONS]`
 #
 # [OPTIONS]
 #   - `-s TAGETS_FILE`
@@ -45,7 +45,6 @@ function do_proc {
                     ls -l /boot/firmware/overlays/pwm-fan.dtbo && \
                     sudo reboot ; \
                 fi"
-            #ssh ${target} ""
         fi
     fi
 }

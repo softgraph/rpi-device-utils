@@ -8,7 +8,9 @@
 #   - Print formatted output of `aconnect -l`.
 #
 # [OPTIONS]
-# - `-v`: Verbose
+# - `-v`: Enable verbose output.
+#----------------------------------------
+
 #----------------------------------------
 # [NOTE for `aconnect`]
 # - `aconnect` is an ALSA utility to connect or disconnect MIDI input and output ports.
@@ -43,7 +45,10 @@
 use strict;
 use warnings;
 
+#----------------------------------------
 # Constants
+#----------------------------------------
+
 my $pattern_device = q|
 	^
 	\s*
@@ -107,43 +112,62 @@ my $pattern_conn_unit = q|
 	$
 |;
 
+#----------------------------------------
 # Globl Variables
+#----------------------------------------
+
 my $opt_verbose = 0;
 my $opt_action_list = 1;	# as a default action
+
 my %map_device = ();
 my %map_port_in = ();
 my %map_port_out = ();
 
-# Check options
-foreach (@ARGV) {
-	if (m|-v|) {
-		$opt_verbose += 1;
-	}
-	if (m|-vv|) {
-		$opt_verbose = 2;
-	}
-	if (m|-vvv|) {
-		$opt_verbose = 3;
+#----------------------------------------
+# Main
+#----------------------------------------
+
+check_options();
+handle_actions();
+
+#----------------------------------------
+# Functions
+#----------------------------------------
+
+# Check options.
+sub check_options {
+	foreach (@ARGV) {
+		if (m|-v|) {
+			$opt_verbose += 1;
+		}
+		if (m|-vv|) {
+			$opt_verbose = 2;
+		}
+		if (m|-vvv|) {
+			$opt_verbose = 3;
+		}
 	}
 }
 
-# Do action
-if ($opt_action_list > 0) {
-	# Create maps
-	my @list_port_in = `aconnect -i`;
-	my @list_port_out = `aconnect -o`;
-	create_input_map(@list_port_in);
-	create_output_map(@list_port_out);
-	print_maps();
+# Handle actions.
+sub handle_actions {
+	if ($opt_action_list > 0) {
+		# Create maps
+		my @list_port_in = `aconnect -i`;
+		my @list_port_out = `aconnect -o`;
+		create_input_map(@list_port_in);
+		create_output_map(@list_port_out);
+		print_maps();
 
-	# Print all
-	my @list_port_con = `aconnect -l`;
-	print_header();
-	print_all(@list_port_con);
-	print_connections_by_name(@list_port_con);
+		# Print all
+		my @list_port_con = `aconnect -l`;
+		print_header();
+		print_all(@list_port_con);
+		print_connections_by_name(@list_port_con);
+	}
 }
 
-# Create the map for input ports and devices
+# Create the map for input ports and devices.
 sub create_input_map {
 	my $client;
 	my $port;
@@ -160,7 +184,7 @@ sub create_input_map {
 	}
 }
 
-# Create the map for input ports and devices
+# Create the map for input ports and devices.
 sub create_output_map {
 	my $client;
 	my $port;
@@ -177,7 +201,7 @@ sub create_output_map {
 	}
 }
 
-# Print maps
+# Print maps.
 sub print_maps {
 	if ($opt_verbose > 0) {
 		foreach my $key (sort keys %map_device) {
@@ -192,13 +216,13 @@ sub print_maps {
 	}
 }
 
-# Print header
+# Print header.
 sub print_header {
-	print "--- Dev: Device, In: Input port, Out: Output port ---\n";
-	print "--- Src: Source port, Dst: Destination Port, Conn: Connected devices ---\n";
+	print "# | Dev | Device      | In  | Input port       | Out  | Output port       |\n";
+	print "# | Src | Source port | Dst | Destination Port | Conn | Connected devices |\n";
 }
 
-# Print all devices, ports and connections
+# Print all devices, ports and connections.
 sub print_all {
 	my $client;
 	my $port;
@@ -258,7 +282,7 @@ sub print_all {
 	}
 }
 
-# Print connections by name
+# Print connections by name.
 sub print_connections_by_name {
 	my $client;
 	foreach (@_) {
@@ -277,3 +301,5 @@ sub print_connections_by_name {
 		}
 	}
 }
+
+#----------------------------------------

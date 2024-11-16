@@ -13,9 +13,18 @@
 
 ## Technical Notes
 
+### USB Audio Device
+
 - You can use `lsusb` and `lsusb -t` command to see which USB devices and interfaces are available.
 - A USB MIDI device can be seen as a USB "Audio" class device which has at least two "AudioControl (AC)" and "MIDIStreaming (MS)" interfaces.
-- For the technical details, refer to:
+
+### USB Midi Device
+
+- You can use `aconnect -l` command to see which MIDI devices and ports are available.
+
+### USB Specifications
+
+- Refer to:
   - usb.org
     - USB Device Class Definition for Audio Devices
       <https://www.usb.org/sites/default/files/audio10.pdf>

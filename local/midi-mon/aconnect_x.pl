@@ -137,14 +137,14 @@ handle_actions();
 # Check options.
 sub check_options {
 	foreach (@ARGV) {
-		if (m|-v|) {
-			$opt_verbose += 1;
-		}
-		if (m|-vv|) {
-			$opt_verbose = 2;
-		}
 		if (m|-vvv|) {
 			$opt_verbose = 3;
+		}
+		elsif (m|-vv|) {
+			$opt_verbose = 2;
+		}
+		elsif (m|-v|) {
+			$opt_verbose += 1;
 		}
 	}
 }

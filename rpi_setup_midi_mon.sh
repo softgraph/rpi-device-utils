@@ -29,13 +29,13 @@ function do_proc {
         target=$1
         user=${target%@*}
         host=${target#*@}
-        if [ -f local/midi-mon/midi_mon.${host}.sh ] ; then
+        if [ -f local/midi-mon/midi_mon.${host}.pl ] ; then
             echo "--- ${target} ---"
-            ssh ${target} "mkdir -p local/midi-mon && pkill -f '/bin/bash ./midi_mon.sh'"
+            ssh ${target} "mkdir -p local/midi-mon && pkill -f 'perl ./midi_mon.pl'"
             scp local/midi-mon/aconnect_x.pl       ${target}:local/midi-mon/
-            scp local/midi-mon/midi_mon.${host}.sh ${target}:local/midi-mon/midi_mon.sh
-            ssh ${target} "sh -c 'cd local/midi-mon && chmod +x *.sh *.pl && nohup ./midi_mon.sh > /dev/null 2>&1 < /dev/null &'"
-            ssh ${target} "ps -x -o pid,ppid,user,cmd | grep -v grep | egrep '${user} +/bin/bash \./midi_mon\.sh'"
+            scp local/midi-mon/midi_mon.${host}.pl ${target}:local/midi-mon/midi_mon.pl
+            ssh ${target} "sh -c 'cd local/midi-mon && chmod +x *.pl && nohup ./midi_mon.pl > /dev/null 2>&1 < /dev/null &'"
+            ssh ${target} "ps -x -o pid,ppid,user,cmd | grep -v grep | egrep '${user} +perl \./midi_mon\.pl'"
         fi
     fi
 }

@@ -41,13 +41,17 @@ def monitor():
     while True:
         now = datetime.datetime.now()
         str_time = now.strftime("%H:%M:%S")
-        temp = 0
-        with open('/sys/class/thermal/thermal_zone0/temp') as t:
-            temp = int(t.read())
-        deque_temp.append(temp)
+        str_temp = ''
+        try:
+            with open('/sys/class/thermal/thermal_zone0/temp') as fc:
+                temp = int(fc.read())
+                deque_temp.append(temp)
+                str_temp = "{:.2f} °C".format(temp / 1000)
+        except (FileNotFoundError, PermissionError):
+            str_temp = '-'
         with canvas(device) as dc:
             dc.text((84, 0), str_time, fill="white")
-            dc.text((0, 0), "{:.2f} °C".format(temp / 1000), fill="white")
+            dc.text(( 0, 0), str_temp, fill="white")
             x = 0
             for temp in deque_temp:
                 y = - int(temp / 1000) + 66

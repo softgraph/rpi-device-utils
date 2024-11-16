@@ -2,14 +2,14 @@
 
 ## Setup
 
-- `midi_mon.sh` is a shell script to periodically check the connection between two midi devices.
-- To setup `midi_mon.sh` on the device, see:
+- `midi_mon.pl` is a perl script to periodically check the connection between two midi devices.
+- To setup `midi_mon.pl` on the device, see:
   - [rpi_setup_midi_mon.sh](../../rpi_setup_midi_mon.sh)
 
 ## Source Code
 
 - Here is an example.
-  - [midi_mon.rpi-1.local.sh](midi_mon.rpi-1.local.sh)
+  - [midi_mon.rpi-1.local.pl](midi_mon.rpi-1.local.pl)
 
 ## Technical Notes
 

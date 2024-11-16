@@ -27,6 +27,7 @@ function do_proc {
     if [ $# -eq 1 ]
     then
         target=$1
+        user=${target%@*}
         host=${target#*@}
         if [ -f local/oled-mon/oled_mon.${host}.py ] ; then
             echo "--- ${target} ---"
@@ -34,7 +35,7 @@ function do_proc {
             scp local/oled-mon/demo_opts.py        ${target}:local/oled-mon/
             scp local/oled-mon/oled_mon.${host}.py ${target}:local/oled-mon/oled_mon.py
             ssh ${target} "nohup ~/venv/luma/bin/python local/oled-mon/oled_mon.py > /dev/null 2>&1 < /dev/null &"
-            ssh ${target} "ps -e -o pid,ppid,cmd | grep -v 'grep' | egrep ' PPID |oled_mon.py'"
+            ssh ${target} "ps -x -o pid,ppid,user,cmd | grep -v grep | egrep '${user} +/home/pi/venv/luma/bin/python local/oled-mon/oled_mon\.py'"
         fi
     fi
 }

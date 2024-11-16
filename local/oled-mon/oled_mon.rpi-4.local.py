@@ -41,8 +41,9 @@ def monitor():
     while True:
         now = datetime.datetime.now()
         str_time = now.strftime("%H:%M:%S")
-        with open('/sys/class/thermal/thermal_zone0/temp') as f:
-            temp = int(f.read())
+        temp = 0
+        with open('/sys/class/thermal/thermal_zone0/temp') as t:
+            temp = int(t.read())
         deque_temp.append(temp)
         with canvas(device) as dc:
             dc.text((84, 0), str_time, fill="white")

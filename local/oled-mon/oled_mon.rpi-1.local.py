@@ -55,19 +55,24 @@ def monitor():
     while True:
         now = datetime.datetime.now()
         str_time = now.strftime("%H:%M:%S")
-        with open('/sys/class/thermal/thermal_zone0/temp') as f:
-            temp = int(f.read())
+        str_midi = ''
+        with open('/var/tmp/local/midi-con.txt') as m:
+            str_midi = m.readline().rstrip()
+        temp = 0
+        with open('/sys/class/thermal/thermal_zone0/temp') as t:
+            temp = int(t.read())
         deque_temp.append(temp)
         with canvas(device) as dc:
             dc.text((84, 0), str_time, fill="white")
+            dc.text((0, 16), str_midi, fill="white")
             dc.text((0, 0), "{:.2f} °C".format(temp / 1000), fill="white")
-            x = 0
-            for temp in deque_temp:
-                y = - int(temp / 1000) + 66
-                if y < 0: y = 0
-                elif y > 31: y = 31
-                dc.point((x,y), fill="white")
-                x += 1
+            # x = 0
+            # for temp in deque_temp:
+            #    y = - int(temp / 1000) + 66
+            #    if y < 0: y = 0
+            #    elif y > 31: y = 31
+            #    dc.point((x,y), fill="white")
+            #    x += 1
         time.sleep(1)
 
 if __name__ == "__main__":

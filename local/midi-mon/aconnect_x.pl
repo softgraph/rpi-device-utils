@@ -205,21 +205,25 @@ sub create_output_map {
 sub print_maps {
 	if ($opt_verbose > 0) {
 		foreach my $key (sort keys %map_device) {
-			print "+ Dev  ${key} = $map_device{$key}\n";
+			print "+ Dev  ${key} = '$map_device{$key}'\n";
 		}
 		foreach my $key (sort keys %map_port_in) {
-			print "+ In   ${key} = $map_port_in{$key}\n";
+			print "+ In   ${key} = '$map_port_in{$key}'\n";
 		}
 		foreach my $key (sort keys %map_port_out) {
-			print "+ Out  ${key} = $map_port_out{$key}\n";
+			print "+ Out  ${key} = '$map_port_out{$key}'\n";
 		}
 	}
 }
 
 # Print header.
 sub print_header {
-	print "# | Dev | Device      | In  | Input port       | Out  | Output port       |\n";
-	print "# | Src | Source port | Dst | Destination Port | Conn | Connected devices |\n";
+	print "# Dev: Device\n";
+	print "# In:  Device's Input Port\n";
+	print "# Out: Device's Output Port\n";
+	print "# Src: Connected Source Port\n";
+	print "# Dst: Connected Destination Port\n";
+	print "# Con: Connected Devices\n";
 }
 
 # Print all devices, ports and connections.
@@ -232,20 +236,20 @@ sub print_all {
 		{
 			$client = $1;
 			if (defined $3) {
-				print "Dev  $1   $2 $3\n";
+				print "Dev $1   '$2' $3\n";
 			}
 			else {
-				print "Dev  $1   $2\n";
+				print "Dev $1   '$2'\n";
 			}
 		}
 		elsif (m|$pattern_port|x)
 		{
 			$port = $1;
 			if (exists($map_port_in{"$client:$port"})) {
-				print "In   $client:$port $2\n";
+				print "In  $client:$port '$2'\n";
 			}
 			if (exists($map_port_out{"$client:$port"})) {
-				print "Out  $client:$port $2\n";
+				print "Out $client:$port '$2'\n";
 			}
 		}
 		elsif (m|$pattern_conn_to|x) {
@@ -253,10 +257,10 @@ sub print_all {
 			foreach (@connections) {
 				if (m|$pattern_conn_unit|x) {
 					if (defined $3) {
-						print "Src  $client:$port -> $1:$2 $3\n";
+						print "Src $client:$port -> $1:$2 $3\n";
 					}
 					else {
-						print "Src  $client:$port -> $1:$2\n";
+						print "Src $client:$port -> $1:$2\n";
 					}
 				}
 			}
@@ -266,10 +270,10 @@ sub print_all {
 			foreach (@connections) {
 				if (m|$pattern_conn_unit|x) {
 					if (defined $3) {
-						print "Dst  $client:$port <- $1:$2 $3\n";
+						print "Dst $client:$port <- $1:$2 $3\n";
 					}
 					else {
-						print "Dst  $client:$port <- $1:$2\n";
+						print "Dst $client:$port <- $1:$2\n";
 					}
 				}
 			}
@@ -295,7 +299,7 @@ sub print_connections_by_name {
 			my @connections = split(/$pattern_conn_splitter/x, $1);
 			foreach (@connections) {
 				if (m|$pattern_conn_unit|x) {
-					print "Conn $map_device{$client} -> $map_device{$1}\n";
+					print "Con $map_device{$client} -> $map_device{$1}\n";
 				}
 			}
 		}

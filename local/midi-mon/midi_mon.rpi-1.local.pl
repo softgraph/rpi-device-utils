@@ -78,10 +78,10 @@ sub run_loop {
 			my $p_src;
 			my $p_dst;
 			foreach (@list_midi) {
-				if (m|^Out  ([0-9]+:[0-9]+) $S_AUTO_CONNECT_SRC|) {
+				if (m|^Out ([0-9]+:[0-9]+) '$S_AUTO_CONNECT_SRC'$|) {
 					$p_src = $1;
 				}
-				elsif (m|^In   ([0-9]+:[0-9]+) $S_AUTO_CONNECT_DST|) {
+				elsif (m|^In  ([0-9]+:[0-9]+) '$S_AUTO_CONNECT_DST'$|) {
 					$p_dst = $1;
 				}
 			}
@@ -111,7 +111,7 @@ sub export_midi_connection_list {
 		return $count;
 	};
 	foreach (@list_midi) {
-		if (s|^Conn ||) {
+		if (s|^Con ||) {
 			print $file $_;
 			$count++;
 		}

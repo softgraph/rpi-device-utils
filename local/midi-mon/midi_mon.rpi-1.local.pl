@@ -22,7 +22,7 @@ use warnings;
 use File::Path qw(make_path);
 
 #----------------------------------------
-# Configuration
+# Configurations
 #----------------------------------------
 
 my $S_AUTO_CONNECT_SRC = 'MPK mini 3 MIDI 1';

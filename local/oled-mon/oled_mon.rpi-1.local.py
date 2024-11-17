@@ -52,6 +52,8 @@ def device():
 
 def monitor():
     deque_temp = deque([],maxlen=128)
+    plane_count = 3
+    count = 0
     while True:
         now = datetime.datetime.now()
         str_time = now.strftime("%H:%M:%S")
@@ -62,24 +64,30 @@ def monitor():
                 deque_temp.append(temp)
                 str_temp = "{:.2f} °C".format(temp / 1000)
         except (FileNotFoundError, PermissionError):
-            str_temp = '-'
+            pass
         str_midi = ''
         try:
             with open('/var/tmp/local/midi-con.txt') as fc:
                 str_midi = fc.readline().rstrip()
         except (FileNotFoundError, PermissionError):
-            str_midi = '-'
+            pass
         with canvas(device) as dc:
-            dc.text((84,  0), str_time, fill="white")
-            dc.text(( 0, 16), str_midi, fill="white")
-            dc.text(( 0,  0), str_temp, fill="white")
-            # x = 0
-            # for temp in deque_temp:
-            #    y = - int(temp / 1000) + 66
-            #    if y < 0: y = 0
-            #    elif y > 31: y = 31
-            #    dc.point((x,y), fill="white")
-            #    x += 1
+            # dc.rectangle(device.bounding_box, outline="white")
+            dc.text((85, -1), str_time, fill="white")
+            dc.text(( 0, -1), str_temp, fill="white")
+            if len(str_midi) > 0 and count >= plane_count:
+                dc.text((0, 21), str_midi, fill="white")
+            else:
+                x = 0
+                for temp in deque_temp:
+                   y = - int(temp / 1000) + 66
+                   if y < 0: y = 0
+                   elif y > 31: y = 31
+                   dc.point((x,y), fill="white")
+                   x += 1
+        count += 1
+        if count >= (plane_count * 2):
+            count = 0
         time.sleep(1)
 
 if __name__ == "__main__":

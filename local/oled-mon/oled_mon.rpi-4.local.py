@@ -48,10 +48,11 @@ def monitor():
                 deque_temp.append(temp)
                 str_temp = "{:.2f} °C".format(temp / 1000)
         except (FileNotFoundError, PermissionError):
-            str_temp = '-'
+            pass
         with canvas(device) as dc:
-            dc.text((84, 0), str_time, fill="white")
-            dc.text(( 0, 0), str_temp, fill="white")
+            # dc.rectangle(device.bounding_box, outline="white")
+            dc.text((85, -1), str_time, fill="white")
+            dc.text(( 0, -1), str_temp, fill="white")
             x = 0
             for temp in deque_temp:
                 y = - int(temp / 1000) + 66

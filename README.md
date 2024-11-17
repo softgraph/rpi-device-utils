@@ -16,14 +16,14 @@ A collection of utilities used to manage Raspberry Pi devices.
 
 ## Preparation
 
-- Run `. _prepare.sh`.
+- Run [`. _prepare.sh`](<_prepare.sh>).
 - Configure each Raspberry Pi device to accept a password-less ssh connection using `ssh user@hostname`.
   - For the details, refer to:
     - raspberrypi.com
       - Raspberry Pi Documentation
         - [Remote access](<https://www.raspberrypi.com/documentation/computers/remote-access.html>)
           - [Configure SSH without a password](<https://www.raspberrypi.com/documentation/computers/remote-access.html#configure-ssh-without-a-password>)
-- Create `targets` file as `targets.example`.
+- Create `targets` file as [`targets.example`](<targets.example>).
 
 ## Utilities
 

@@ -11,6 +11,13 @@
 #     or
 #     `-t USER@HOSTNAME`
 #   - If neither `-s` or `-t` is given, `targets` file is used instead.
+#
+# [REQUIREMENT]
+# - macOS
+#   - `dscacheutil`
+# - Linux
+#   - `avahi-resolve-host-name`
+#     - Install `avahi-utils` package for the command.
 #---------------------------------------
 
 set -u
@@ -30,6 +37,10 @@ function do_proc {
         if type dscacheutil > /dev/null 2>&1 ; then
             echo "--- ${host} ---"
             dscacheutil -q host -a name ${host} | grep -e 'address'
+        elif type avahi-resolve-host-name > /dev/null 2>&1 ; then
+            echo "--- ${host} ---"
+            avahi-resolve-host-name -4 ${host}
+            avahi-resolve-host-name -6 ${host}
         fi
     fi
 }

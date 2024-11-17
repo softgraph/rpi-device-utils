@@ -137,14 +137,14 @@ handle_actions();
 # Check options.
 sub check_options {
 	foreach (@ARGV) {
-		if (m|-vvv|) {
-			$opt_verbose = 3;
+		if (m|^-v$|) {
+			$opt_verbose += 1;
 		}
-		elsif (m|-vv|) {
+		elsif (m|^-vv$|) {
 			$opt_verbose = 2;
 		}
-		elsif (m|-v|) {
-			$opt_verbose += 1;
+		elsif (m|^-vvv$|) {
+			$opt_verbose = 3;
 		}
 	}
 }
@@ -157,11 +157,11 @@ sub handle_actions {
 		my @list_port_out = `aconnect -o`;
 		create_input_map(@list_port_in);
 		create_output_map(@list_port_out);
-		print_maps();
 
 		# Print all
 		my @list_port_con = `aconnect -l`;
 		print_header();
+		print_maps();
 		print_all(@list_port_con);
 		print_connections_by_name(@list_port_con);
 	}
@@ -201,21 +201,6 @@ sub create_output_map {
 	}
 }
 
-# Print maps.
-sub print_maps {
-	if ($opt_verbose > 0) {
-		foreach my $key (sort keys %map_device) {
-			print "+ Dev  ${key} = '$map_device{$key}'\n";
-		}
-		foreach my $key (sort keys %map_port_in) {
-			print "+ In   ${key} = '$map_port_in{$key}'\n";
-		}
-		foreach my $key (sort keys %map_port_out) {
-			print "+ Out  ${key} = '$map_port_out{$key}'\n";
-		}
-	}
-}
-
 # Print header.
 sub print_header {
 	print "# Dev: Device\n";
@@ -223,7 +208,22 @@ sub print_header {
 	print "# Out: Device's Output Port\n";
 	print "# Src: Connected Source Port\n";
 	print "# Dst: Connected Destination Port\n";
-	print "# Con: Connected Devices\n";
+	print "# Con: Connected Device Names\n";
+}
+
+# Print maps.
+sub print_maps {
+	if ($opt_verbose > 0) {
+		foreach my $key (sort keys %map_device) {
+			print "+ Dev ${key} = '$map_device{$key}'\n";
+		}
+		foreach my $key (sort keys %map_port_in) {
+			print "+ In  ${key} = '$map_port_in{$key}'\n";
+		}
+		foreach my $key (sort keys %map_port_out) {
+			print "+ Out ${key} = '$map_port_out{$key}'\n";
+		}
+	}
 }
 
 # Print all devices, ports and connections.

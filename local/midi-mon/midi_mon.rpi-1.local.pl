@@ -58,14 +58,14 @@ run_loop();
 # Check options.
 sub check_options {
 	foreach (@ARGV) {
-		if (m|-vvv|) {
-			$opt_verbose = 3;
+		if (m|^-v$|) {
+			$opt_verbose += 1;
 		}
-		elsif (m|-vv|) {
+		elsif (m|^-vv$|) {
 			$opt_verbose = 2;
 		}
-		elsif (m|-v|) {
-			$opt_verbose += 1;
+		elsif (m|^-vvv$|) {
+			$opt_verbose = 3;
 		}
 	}
 }

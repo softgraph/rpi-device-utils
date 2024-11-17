@@ -1,4 +1,5 @@
 `demo_opts.py` is a part of `luma.examples`.
 For the details, refer to the following URLs:
 - https://github.com/rm-hull/luma.examples/blob/main/
+- https://github.com/rm-hull/luma.examples/blob/main/LICENSE.rst
 - https://github.com/rm-hull/luma.examples/blob/main/examples/demo_opts.py

@@ -38,7 +38,16 @@ import time
 from demo_opts import get_device
 from luma.core.render import canvas # type: ignore
 
-def device():
+deque_temp = deque([],maxlen=128)
+
+def main():
+    try:
+        device = configure_device()
+        monitor(device)
+    except KeyboardInterrupt:
+        pass
+
+def configure_device():
     # [SSD1306] get device
     device = get_device(actual_args=['--display=ssd1306', '--width=128', '--height=32', '--interface=spi'])
     # [SSD1305] Set COM Output Scan Direction: remapped mode
@@ -50,49 +59,60 @@ def device():
     device._colend += 4   # 128 -> 132
     return device
 
-def monitor():
-    deque_temp = deque([],maxlen=128)
-    plane_count = 3
-    count = 0
+def monitor(device):
+    count_plane_0 = 3
+    count_plane_1 = count_plane_0 * 2
+    i = 0
     while True:
-        now = datetime.datetime.now()
-        str_time = now.strftime("%H:%M:%S")
-        str_temp = ''
-        try:
-            with open('/sys/class/thermal/thermal_zone0/temp') as fc:
-                temp = int(fc.read())
-                deque_temp.append(temp)
-                str_temp = "{:.2f} °C".format(temp / 1000)
-        except (FileNotFoundError, PermissionError):
-            pass
-        str_midi = ''
-        try:
-            with open('/var/tmp/local/midi-con.txt') as fc:
-                str_midi = fc.readline().rstrip()
-        except (FileNotFoundError, PermissionError):
-            pass
+        update()
         with canvas(device) as dc:
-            # dc.rectangle(device.bounding_box, outline="white")
-            dc.text((85, -1), str_time, fill="white")
-            dc.text(( 0, -1), str_temp, fill="white")
-            if len(str_midi) > 0 and count >= plane_count:
-                dc.text((0, 21), str_midi, fill="white")
-            else:
-                x = 0
-                for temp in deque_temp:
-                   y = - int(temp / 1000) + 66
-                   if y < 0: y = 0
-                   elif y > 31: y = 31
-                   dc.point((x,y), fill="white")
-                   x += 1
-        count += 1
-        if count >= (plane_count * 2):
-            count = 0
+            draw_common(dc)
+            if i < count_plane_0:
+                draw_plane_0(dc)
+            elif i < count_plane_1:
+                draw_plane_1(dc)
+        i += 1
+        if i >= count_plane_1:
+            i = 0
         time.sleep(1)
 
-if __name__ == "__main__":
+def update():
     try:
-        device = device()
-        monitor()
-    except KeyboardInterrupt:
+        with open('/sys/class/thermal/thermal_zone0/temp') as fc:
+            temp = int(fc.read())
+            deque_temp.append(temp)
+    except (FileNotFoundError, PermissionError):
         pass
+
+def draw_common(dc):
+    now = datetime.datetime.now()
+    str_time = now.strftime("%H:%M:%S")
+    temp = deque_temp[-1]
+    str_temp = "{:.2f} °C".format(temp / 1000)
+    # dc.rectangle(device.bounding_box, outline="white")
+    dc.text((85, -1), str_time, fill="white")
+    dc.text(( 0, -1), str_temp, fill="white")
+
+def draw_plane_0(dc):
+    x = 0
+    for temp in deque_temp:
+        y = - int(temp / 1000) + 66
+        if y < 0: y = 0
+        elif y > 31: y = 31
+        dc.point((x,y), fill="white")
+        x += 1
+
+def draw_plane_1(dc):
+    str_midi = ''
+    try:
+        with open('/var/tmp/local/midi-con.txt') as fc:
+            str_midi = fc.readline().rstrip()
+    except (FileNotFoundError, PermissionError):
+        pass
+    if len(str_midi) > 0:
+        dc.text((0, 21), str_midi, fill="white")
+    else:
+        draw_plane_0(dc)
+
+if __name__ == "__main__":
+    main()

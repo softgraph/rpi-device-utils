@@ -5,8 +5,23 @@
 - `oled_mon.py` is a python program to periodically show device status on an OLED display.
 - To setup `oled_mon.py` on the device, see:
   - [rpi_setup_oled_mon.sh](../../rpi_setup_oled_mon.sh)
-- Python module `Luma.OLED` is required. For the detail, see:
+
+### `Luma.OLED`
+
+- Python module `Luma.OLED` is required. For the details, see:
   - [Luma.OLED](<luma.oled.md>)
+
+### I2C
+
+- If the display is connected via I2C, run the command below to enable I2C.
+  - `sudo raspi-config nonint do_i2c 0`
+  - `sudo reboot`
+
+### SPI
+
+- If the display is connected via SPI, run the command below to enable SPI.
+  - `sudo raspi-config nonint do_spi 0`
+  - `sudo reboot`
 
 ## Source Code
 

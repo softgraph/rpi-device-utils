@@ -28,8 +28,7 @@ function end_proc {
 }
 
 function do_proc {
-    if [ $# -ge 2 ]
-    then
+    if [ $# -ge 2 ] ; then
         target=$1
         shift
         echo "--- ${target} ---"

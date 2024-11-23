@@ -24,16 +24,17 @@ function end_proc {
 }
 
 function do_proc {
-    if [ $# -eq 1 ]
-    then
+    if [ $# -eq 1 ] ; then
         target=$1
         host=${target#*@}
         if [ -f local/pwm-fan/pwm-fan.${host}.dts ] ; then
             echo "--- ${target} ---"
-            ssh ${target} "mkdir -p local/pwm-fan"
+            ssh ${target} " \
+                mkdir -p local/pwm-fan \
+            "
             scp local/pwm-fan/pwm-fan.${host}.dts ${target}:local/pwm-fan/pwm-fan.dts
-            ssh ${target} \
-                "grep dtoverlay=pwm-fan /boot/firmware/config.txt > /dev/null ; \
+            ssh ${target} " \
+                grep dtoverlay=pwm-fan /boot/firmware/config.txt > /dev/null ; \
                 if [ \$? -eq 1 ] ; then \
                     echo [ERROR] Add the following line to \'${host}:/boot/firmware/config.txt\'. ; \
                     echo dtoverlay=pwm-fan ; \
@@ -44,7 +45,8 @@ function do_proc {
                     sudo cp pwm-fan.dtbo /boot/firmware/overlays/ && \
                     ls -l /boot/firmware/overlays/pwm-fan.dtbo && \
                     sudo reboot ; \
-                fi"
+                fi \
+            "
         fi
     fi
 }

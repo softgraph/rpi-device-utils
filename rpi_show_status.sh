@@ -24,12 +24,10 @@ function end_proc {
 }
 
 function do_proc {
-    if [ $# -eq 1 ]
-    then
+    if [ $# -eq 1 ] ; then
         target=$1
         echo "--- ${target} ---"
-        for f in status.bash/*
-        do
+        for f in status.bash/* ; do
             if [ ! -f $f ] ; then continue ; fi
             cat $f | ssh ${target} bash
         done

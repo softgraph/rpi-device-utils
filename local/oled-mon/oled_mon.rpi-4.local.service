@@ -1,5 +1,5 @@
 [Unit]
-Description=oled-mon
+Description=oled_mon
 
 [Service]
 Type=simple

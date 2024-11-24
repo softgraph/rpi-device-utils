@@ -1,5 +1,6 @@
 [Unit]
-Description=oled-mon
+Description=oled_mon
+After=oled_mon_delay.service
 
 [Service]
 Type=simple

@@ -31,6 +31,7 @@ function do_proc {
         if [ -f local/midi-mon/midi_mon.${host}.pl ] ; then
             echo "--- ${target} ---"
             ssh ${target} " \
+                mkdir -p ~/.config/systemd/user ; \
                 mkdir -p ~/local/midi-mon && \
                 systemctl --user stop midi_mon ; \
                 pkill -f 'perl .*/midi_mon\.pl' \
@@ -40,9 +41,9 @@ function do_proc {
             scp local/midi-mon/midi_mon.${host}.service ${target}:local/midi-mon/midi_mon.service
             ssh ${target} " \
                 chmod +x ~/local/midi-mon/*.pl ; \
-                mkdir -p ~/.config/systemd/user ; \
                 cd ~/.config/systemd/user && \
                 ln -fs ~/local/midi-mon/midi_mon.service . ; \
+                loginctl enable-linger ${user} ; \
                 systemctl --user enable midi_mon && \
                 systemctl --user start midi_mon \
             "

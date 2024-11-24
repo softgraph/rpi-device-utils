@@ -1,0 +1,10 @@
+[Unit]
+Description=oled-mon
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/local/oled-mon
+ExecStart=/home/pi/venv/luma/bin/python oled_mon.py
+
+[Install]
+WantedBy=default.target

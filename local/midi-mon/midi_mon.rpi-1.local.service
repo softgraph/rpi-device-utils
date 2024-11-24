@@ -1,0 +1,10 @@
+[Unit]
+Description=midi-mon
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/local/midi-mon
+ExecStart=/home/pi/local/midi-mon/midi_mon.pl
+
+[Install]
+WantedBy=default.target

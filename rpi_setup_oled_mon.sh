@@ -31,21 +31,24 @@ function do_proc {
         if [ -f local/oled-mon/oled_mon.${host}.py ] ; then
             echo "--- ${target} ---"
             ssh ${target} " \
-                mkdir -p local/oled-mon && \
-                pkill -f '${user}/venv/luma/bin/python .*oled_mon\.py' \
+                mkdir -p ~/local/oled-mon ; \
+                systemctl --user stop oled_mon ; \
+                pkill -f 'python oled_mon\.py' \
             "
-            scp local/oled-mon/demo_opts.py        ${target}:local/oled-mon/
-            scp local/oled-mon/oled_mon.${host}.py ${target}:local/oled-mon/oled_mon.py
+            scp local/oled-mon/demo_opts.py             ${target}:local/oled-mon/
+            scp local/oled-mon/oled_mon.${host}.py      ${target}:local/oled-mon/oled_mon.py
+            scp local/oled-mon/oled_mon.${host}.service ${target}:local/oled-mon/oled_mon.service
             ssh ${target} " \
-                sh -c ' \
-                    cd local/oled-mon && \
-                    nohup ~/venv/luma/bin/python oled_mon.py > /dev/null 2>&1 < /dev/null & \
-                ' \
+                mkdir -p ~/.config/systemd/user ; \
+                cd ~/.config/systemd/user && \
+                ln -fs ~/local/oled-mon/oled_mon.service . ; \
+                systemctl --user enable oled_mon && \
+                systemctl --user start oled_mon \
             "
             ssh ${target} " \
                 ps -x -o pid,ppid,user,cmd | \
                 grep -v grep | \
-                egrep '${user}/venv/luma/bin/python .*oled_mon\.py' \
+                egrep 'python oled_mon\.py' \
             "
         fi
     fi

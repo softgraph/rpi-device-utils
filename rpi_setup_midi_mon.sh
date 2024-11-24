@@ -31,22 +31,25 @@ function do_proc {
         if [ -f local/midi-mon/midi_mon.${host}.pl ] ; then
             echo "--- ${target} ---"
             ssh ${target} " \
-                mkdir -p local/midi-mon && \
-                pkill -f 'perl ./midi_mon.pl' \
+                mkdir -p ~/local/midi-mon && \
+                systemctl --user stop midi_mon ; \
+                pkill -f 'perl .*/midi_mon\.pl' \
             "
-            scp local/midi-mon/aconnect_x.pl       ${target}:local/midi-mon/
-            scp local/midi-mon/midi_mon.${host}.pl ${target}:local/midi-mon/midi_mon.pl
+            scp local/midi-mon/aconnect_x.pl            ${target}:local/midi-mon/
+            scp local/midi-mon/midi_mon.${host}.pl      ${target}:local/midi-mon/midi_mon.pl
+            scp local/midi-mon/midi_mon.${host}.service ${target}:local/midi-mon/midi_mon.service
             ssh ${target} " \
-                sh -c ' \
-                    cd local/midi-mon && \
-                    chmod +x *.pl && \
-                    nohup ./midi_mon.pl > /dev/null 2>&1 < /dev/null & \
-                ' \
+                chmod +x ~/local/midi-mon/*.pl ; \
+                mkdir -p ~/.config/systemd/user ; \
+                cd ~/.config/systemd/user && \
+                ln -fs ~/local/midi-mon/midi_mon.service . ; \
+                systemctl --user enable midi_mon && \
+                systemctl --user start midi_mon \
             "
             ssh ${target} " \
                 ps -x -o pid,ppid,user,cmd | \
                 grep -v grep | \
-                egrep '${user} +perl \./midi_mon\.pl' \
+                egrep 'perl .*/midi_mon\.pl' \
             "
         fi
     fi

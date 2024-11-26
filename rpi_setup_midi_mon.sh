@@ -34,6 +34,7 @@ function do_proc {
                 mkdir -p ~/.config/systemd/user ; \
                 mkdir -p ~/local/midi-mon && \
                 systemctl --user stop midi_mon ; \
+                systemctl --user disable midi_mon ; \
                 pkill -f 'perl .*/midi_mon\.pl' \
             "
             scp local/midi-mon/aconnect_x.pl            ${target}:local/midi-mon/
@@ -44,7 +45,7 @@ function do_proc {
                 cd ~/.config/systemd/user && \
                 ln -fs ~/local/midi-mon/midi_mon.service . ; \
                 loginctl enable-linger ${user} ; \
-                systemctl --user enable midi_mon && \
+                systemctl --user enable midi_mon ; \
                 systemctl --user start midi_mon \
             "
             ssh ${target} " \

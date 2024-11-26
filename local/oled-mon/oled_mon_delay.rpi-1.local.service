@@ -1,9 +1,0 @@
-[Unit]
-Description=oled_mon_delay
-
-[Service]
-Type=oneshot
-ExecStart=/bin/sleep 20
-
-[Install]
-WantedBy=default.target

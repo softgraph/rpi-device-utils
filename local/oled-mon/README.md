@@ -1,4 +1,4 @@
-# `oled-mon`
+# OLED Monitor (`oled-mon`)
 
 ## Setup
 

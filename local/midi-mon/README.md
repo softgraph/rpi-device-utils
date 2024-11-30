@@ -1,4 +1,4 @@
-# `midi-mon`
+# MIDI Monitor (`midi-mon`)
 
 ## Setup
 

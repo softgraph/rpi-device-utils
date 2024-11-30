@@ -1,4 +1,4 @@
-# `pwm-fan`
+# PWM Fan (`pwm-fan`)
 
 ## Setup
 

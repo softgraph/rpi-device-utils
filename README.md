@@ -1,4 +1,4 @@
-# rpi-device-utils
+# Raspberry Pi Device Utilities (`rpi-device-utils`)
 
 A collection of utilities used to manage Raspberry Pi devices.
 
@@ -38,15 +38,12 @@ A collection of utilities used to manage Raspberry Pi devices.
 - Run Command on Device
   - [`rpi_run.sh`](<rpi_run.sh>)
 - Setup Device
-  - [`rpi_setup_midi_mon.sh`](<rpi_setup_midi_mon.sh>)
-    - <a href="local/midi-mon">`local/midi-mon/`</a>
-    - See also:
-      - [README.md](<local/midi-mon/README.md>)
-  - [`rpi_setup_oled_mon.sh`](<rpi_setup_oled_mon.sh>)
-    - <a href="local/oled-mon">`local/oled-mon/`</a>
-    - See also:
-      - [README.md](<local/oled-mon/README.md>)
-  - [`rpi_setup_pwm_fan.sh`](<rpi_setup_pwm_fan.sh>)
-    - <a href="local/pwm-fan">`local/pwm-fan/`</a>
-    - See also:
-      - [README.md](<local/pwm-fan/README.md>)
+  - [MIDI Monitor (`midi-mon`)](<local/midi-mon/README.md>)
+    - [`rpi_setup_midi_mon.sh`](<rpi_setup_midi_mon.sh>)
+      - <a href="local/midi-mon">`local/midi-mon/`</a>
+  - [OLED Monitor (`oled-mon`)](<local/oled-mon/README.md>)
+    - [`rpi_setup_oled_mon.sh`](<rpi_setup_oled_mon.sh>)
+      - <a href="local/oled-mon">`local/oled-mon/`</a>
+  - [PWM Fan (`pwm-fan`)](<local/pwm-fan/README.md>)
+    - [`rpi_setup_pwm_fan.sh`](<rpi_setup_pwm_fan.sh>)
+      - <a href="local/pwm-fan">`local/pwm-fan/`</a>

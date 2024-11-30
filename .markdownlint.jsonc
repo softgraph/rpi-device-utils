@@ -1,0 +1,13 @@
+{
+	// MD013 - Line length
+	// https://github.com/DavidAnson/markdownlint/blob/main/doc/md013.md
+	"line-length": false,
+
+	// MD033 - Inline HTML
+    // https://github.com/DavidAnson/markdownlint/blob/main/doc/md033.md
+    "no-inline-html": {
+        "allowed_elements": [
+			"a"
+		]
+	}
+}

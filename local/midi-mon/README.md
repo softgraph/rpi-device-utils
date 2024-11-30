@@ -20,12 +20,12 @@
 - Examples:
 
 ```shell
-$ lsusb ; lsusb -t
-Bus 001 Device 005: ID 0582:0168 Roland Corp. UM-ONE
-Bus 001 Device 004: ID 7104:1400 CME (Central Music Co.) U2MIDI Pro
-Bus 001 Device 003: ID 09e8:1049 AKAI  Professional M.I. Corp. MPK mini 3
-Bus 001 Device 002: ID 05e3:0608 Genesys Logic, Inc. Hub
+$ lsusb | sort ; lsusb -t
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 05e3:0608 Genesys Logic, Inc. Hub
+Bus 001 Device 003: ID 09e8:1049 AKAI  Professional M.I. Corp. MPK mini 3
+Bus 001 Device 004: ID 7104:1400 CME (Central Music Co.) U2MIDI Pro
+Bus 001 Device 005: ID 0582:0168 Roland Corp. UM-ONE
 /:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=dwc_otg/1p, 480M
     |__ Port 1: Dev 2, If 0, Class=Hub, Driver=hub/4p, 480M
         |__ Port 2: Dev 3, If 0, Class=Human Interface Device, Driver=usbhid, 12M

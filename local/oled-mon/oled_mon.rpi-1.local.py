@@ -33,19 +33,37 @@
 
 from collections import deque
 import datetime
+import logging
+import os.path
 import time
 
 from demo_opts import get_device
 from luma.core.render import canvas # type: ignore
 
+logger = logging.getLogger()
+name = os.path.basename(__file__)
+
 deque_temp = deque([],maxlen=128)
 
 def main():
     try:
+        ensure_gpio_ready()
         device = configure_device()
         monitor(device)
     except KeyboardInterrupt:
         pass
+
+def ensure_gpio_ready():
+    gpiomem = '/dev/gpiomem'
+    logger.info(f"{name}: Waiting for '{gpiomem}' is ready")
+    while True:
+        try:
+            with open(gpiomem) as x:
+                break
+        except (FileNotFoundError, PermissionError):
+            pass
+        time.sleep(1)
+    logger.info(f"{name}: Now '{gpiomem}' is ready")
 
 def configure_device():
     # [SSD1306] get device

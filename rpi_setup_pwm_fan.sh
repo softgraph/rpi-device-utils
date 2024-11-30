@@ -7,7 +7,7 @@
 #   - `./rpi_setup_pwm_fan.sh [OPTIONS]`
 #
 # [OPTIONS]
-#   - `-s TAGETS_FILE`
+#   - `-s TARGETS_FILE`
 #     or
 #     `-t USER@HOSTNAME`
 #   - If neither `-s` or `-t` is given, `targets` file is used instead.

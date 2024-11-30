@@ -3,4 +3,4 @@
 # [USAGE]
 # - `. _prepare.sh`
 
-chmod +x rpi_*.sh
+chmod u+x rpi_[a-z]*.sh

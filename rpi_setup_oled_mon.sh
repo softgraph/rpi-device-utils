@@ -38,6 +38,9 @@ function do_proc {
                 pkill -f 'python oled_mon\.py' \
             "
             scp local/oled-mon/demo_opts.py             ${target}:local/oled-mon/
+            scp local/oled-mon/oled_gpio.py             ${target}:local/oled-mon/
+            scp local/oled-mon/oled_ssd1305_spi.py      ${target}:local/oled-mon/
+            scp local/oled-mon/oled_ssd1306_i2c.py      ${target}:local/oled-mon/
             scp local/oled-mon/oled_mon.${host}.py      ${target}:local/oled-mon/oled_mon.py
             scp local/oled-mon/oled_mon.${host}.service ${target}:local/oled-mon/oled_mon.service
             ssh ${target} " \

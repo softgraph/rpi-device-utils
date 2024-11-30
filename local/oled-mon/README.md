@@ -13,13 +13,13 @@
 
 ### I2C
 
-- If the display is connected via I2C, run the command below to enable I2C.
+- If the display is connected via I2C, run the following commands to enable I2C.
   - `sudo raspi-config nonint do_i2c 0`
   - `sudo reboot`
 
 ### SPI
 
-- If the display is connected via SPI, run the command below to enable SPI.
+- If the display is connected via SPI, run the following commands to enable SPI.
   - `sudo raspi-config nonint do_spi 0`
   - `sudo reboot`
 

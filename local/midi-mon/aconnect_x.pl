@@ -232,7 +232,7 @@ sub print_header {
 	print "# Out: Device's Output Port\n";
 	print "# Src: Connected Source Port\n";
 	print "# Dst: Connected Destination Port\n";
-	print "# Con: Connected Device Names\n";
+	print "# Con: Connected Devices\n";
 }
 
 # Print maps.
@@ -270,10 +270,10 @@ sub print_all {
 		{
 			$port = $1;
 			if (exists($map_port_in{"$client:$port"})) {
-				print "In  $client:$port '$2'\n";
+				print "In  $client:$port '$map_device{$client}:$port' '$2'\n";
 			}
 			if (exists($map_port_out{"$client:$port"})) {
-				print "Out $client:$port '$2'\n";
+				print "Out $client:$port '$map_device{$client}:$port' '$2'\n";
 			}
 		}
 		elsif (m|$pattern_conn_to|x) {
@@ -313,17 +313,21 @@ sub print_all {
 # Print connections by name.
 sub print_connections_by_name {
 	my $client;
+	my $port;
 	foreach (@_) {
 		chomp;
 		if (m|$pattern_device|x)
 		{
 			$client = $1;
 		}
+		elsif (m|$pattern_port|x) {
+			$port = $1;
+		}
 		elsif (m|$pattern_conn_to|x) {
 			my @connections = split(/$pattern_conn_splitter/x, $1);
 			foreach (@connections) {
 				if (m|$pattern_conn_unit|x) {
-					print "Con $map_device{$client} -> $map_device{$1}\n";
+					print "Con '$map_device{$client}:$port' -> '$map_device{$1}:$2'\n";
 				}
 			}
 		}

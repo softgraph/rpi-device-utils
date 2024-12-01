@@ -1,8 +1,8 @@
 #----------------------------------------
-# OLED Device Configuration for SSD1305 SPI
+# Device Configuration for SSD1305 OLED Display connected via SPI
 #
 # [USAGE]
-# - `from oled_ssd1305_spi import configure_device`
+# - `from disp_ssd1305_spi import configure_device`
 # - `device = configure_device()`
 #
 # [CONFIGURATION]
@@ -29,7 +29,7 @@
 #----------------------------------------
 
 from demo_opts import get_device
-from oled_gpio import ensure_gpio_ready
+from disp_gpio import ensure_gpio_ready
 
 def configure_device(contextName):
     # Ensure GPIO is ready

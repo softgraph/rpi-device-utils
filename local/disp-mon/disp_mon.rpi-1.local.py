@@ -1,10 +1,10 @@
 #! /usr/bin/env python
 
 #----------------------------------------
-# OLED Monitor
+# Display Monitor
 #
 # [USAGE]
-# - `python oled_mon.py &`
+# - `python disp_mon.py &`
 #----------------------------------------
 
 from collections import deque
@@ -12,7 +12,7 @@ import datetime
 import os.path
 import time
 
-from oled_ssd1305_spi import configure_device
+from disp_ssd1306_i2c import configure_device
 from luma.core.render import canvas # type: ignore
 
 contextName = os.path.basename(__file__)
@@ -26,11 +26,20 @@ def main():
         pass
 
 def monitor(device):
+    count_plane_0 = 3
+    count_plane_1 = count_plane_0 * 2
+    i = 0
     while True:
         update()
         with canvas(device) as dc:
             draw_common(dc)
-            draw_plane_0(dc)
+            if i < count_plane_0:
+                draw_plane_0(dc)
+            elif i < count_plane_1:
+                draw_plane_1(dc)
+        i += 1
+        if i >= count_plane_1:
+            i = 0
         time.sleep(1)
 
 def update():
@@ -58,6 +67,18 @@ def draw_plane_0(dc):
         elif y > 31: y = 31
         dc.point((x,y), fill="white")
         x += 1
+
+def draw_plane_1(dc):
+    str_midi = ''
+    try:
+        with open('/var/tmp/local/midi-con.txt') as fc:
+            str_midi = fc.readline().rstrip()
+    except (FileNotFoundError, PermissionError):
+        pass
+    if len(str_midi) > 0:
+        dc.text((0, 21), str_midi, fill="white")
+    else:
+        draw_plane_0(dc)
 
 #----------------------------------------
 

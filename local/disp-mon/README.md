@@ -1,9 +1,9 @@
-# OLED Monitor (`oled-mon`)
+# Display Monitor (`disp-mon`)
 
 ## Setup
 
-- `oled_mon.py` is a python program to periodically show device status on an OLED display.
-- To setup `oled_mon.py` on the device, see:
+- `disp_mon.py` is a python program to periodically show device status on an OLED display.
+- To setup `disp_mon.py` on the device, see:
   - [rpi_setup_oled_mon.sh](../../rpi_setup_oled_mon.sh)
 
 ### `Luma.OLED`
@@ -27,6 +27,6 @@
 
 - Here are examples.
   - 128x32 OLED Display with SSD1306 display driver connected via I2C
-    - [oled_mon.rpi-1.local.py](oled_mon.rpi-1.local.py)
+    - [disp_mon.rpi-1.local.py](disp_mon.rpi-1.local.py)
   - 128x32 OLED Display with SSD1305 display driver connected via SPI
-    - [oled_mon.rpi-4.local.py](oled_mon.rpi-4.local.py)
+    - [disp_mon.rpi-4.local.py](disp_mon.rpi-4.local.py)

@@ -38,12 +38,12 @@ A collection of utilities used to manage Raspberry Pi devices.
 - Run Command on Device
   - [`rpi_run.sh`](<rpi_run.sh>)
 - Setup Device
+  - [Display Monitor (`disp-mon`)](<local/disp-mon/README.md>)
+    - [`rpi_setup_disp_mon.sh`](<rpi_setup_disp_mon.sh>)
+      - <a href="local/disp-mon">`local/disp-mon/`</a>
   - [MIDI Monitor (`midi-mon`)](<local/midi-mon/README.md>)
     - [`rpi_setup_midi_mon.sh`](<rpi_setup_midi_mon.sh>)
       - <a href="local/midi-mon">`local/midi-mon/`</a>
-  - [OLED Monitor (`oled-mon`)](<local/oled-mon/README.md>)
-    - [`rpi_setup_oled_mon.sh`](<rpi_setup_oled_mon.sh>)
-      - <a href="local/oled-mon">`local/oled-mon/`</a>
   - [PWM Fan (`pwm-fan`)](<local/pwm-fan/README.md>)
     - [`rpi_setup_pwm_fan.sh`](<rpi_setup_pwm_fan.sh>)
       - <a href="local/pwm-fan">`local/pwm-fan/`</a>

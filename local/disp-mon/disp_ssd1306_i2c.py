@@ -1,8 +1,8 @@
 #----------------------------------------
-# OLED Device Configuration for SSD1306 I2C
+# Device Configuration for SSD1306 OLED Display connected via I2C
 #
 # [USAGE]
-# - `from oled_ssd1306_i2c import configure_device`
+# - `from disp_ssd1306_i2c import configure_device`
 # - `device = configure_device()`
 #
 # [CONFIGURATION]

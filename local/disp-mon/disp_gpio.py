@@ -1,5 +1,5 @@
 #----------------------------------------
-# GPIO support for OLED Devices
+# GPIO support for Display Devices
 #
 # [USAGE]
 # - `from oled_gpio import ensure_gpio_ready`

@@ -38,6 +38,7 @@ function do_proc {
                 pkill -f 'python disp_mon\.py' \
             "
             scp local/disp-mon/demo_opts.py             ${target}:local/disp-mon/
+            scp local/disp-mon/disp_contents.py         ${target}:local/disp-mon/
             scp local/disp-mon/disp_gpio.py             ${target}:local/disp-mon/
             scp local/disp-mon/disp_ssd1305_spi.py      ${target}:local/disp-mon/
             scp local/disp-mon/disp_ssd1306_i2c.py      ${target}:local/disp-mon/

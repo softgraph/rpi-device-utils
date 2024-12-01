@@ -3,7 +3,7 @@
 #
 # [USAGE]
 # - `from oled_gpio import ensure_gpio_ready`
-# - `ensure_gpio_ready()`
+# - `ensure_gpio_ready(contextName)`
 #----------------------------------------
 
 import logging

@@ -33,9 +33,8 @@ my $S_AUTO_CONNECT_OPT = '';
 # Constants
 #----------------------------------------
 
-my $d_tmp = "/var/tmp/local/";
-my $f_mon = "${d_tmp}midi-mon.txt";
-my $f_con = "${d_tmp}midi-con.txt";
+my $d_disp_mon = "/var/tmp/local/disp-mon/";
+my $f_midi_mon = "${d_disp_mon}midi_mon.txt";
 
 #----------------------------------------
 # Globl Variables
@@ -127,10 +126,10 @@ sub update_midi_device_list {
 sub export_midi_connection_list {
 	my ($line) = @_;
 	my $count = 0;
-	make_path($d_tmp);
-	open(my $file, ">", $f_con) or do {
+	make_path($d_disp_mon);
+	open(my $file, ">", $f_midi_mon) or do {
 		if ($opt_verbose > 0) {
-			warn "+ WARNING: open() failed for '$f_con'";
+			warn "+ WARNING: open() failed for '$f_midi_mon'";
 		}
 		return $count;
 	};
@@ -140,7 +139,8 @@ sub export_midi_connection_list {
 	else {
 		foreach (@midi_device_list) {
 			if (m|^Con '(.*)' -> '(.*)'$|) {
-				print $file "$1 -> $2\n";
+				print $file "$1 ->\n";
+				print $file "-> $2\n";
 			}
 			$count++;
 		}

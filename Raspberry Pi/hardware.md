@@ -1,4 +1,4 @@
-# Raspberry Pi Hardware
+# Raspberry Pi / Hardware
 
 - raspberrypi.com
   - Raspberry Pi Documentation

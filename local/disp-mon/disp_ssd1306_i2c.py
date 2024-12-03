@@ -20,8 +20,8 @@
 #   - I2C Wiring
 #     - VCC: 3.3V
 #     - GND: GND
-#     - SDA: BSC1 SDA (BCM 2)
-#     - SCL: BSC1 SCL (BCM 3)
+#     - SDA: GPIO 2 (BSC1 SDA)
+#     - SCL: GPIO 3 (BSC1 SCL)
 #----------------------------------------
 
 from demo_opts import get_device

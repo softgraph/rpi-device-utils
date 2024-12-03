@@ -18,11 +18,11 @@
 #   - SPI Wiring
 #     - VCC: 3.3V
 #     - GND: GND
-#     - DIN: SPI0 MOSI (BCM 10) # SPI data input
-#     - CLK: SPI0 SCLK (BCM 12) # SPI clock input
-#     - CS:  SPI0 CE0  (BCM 8)  # Chip selection, low active
-#     - DC:  GPIO 24   (BCM 24) # Data/Command selection (high for data, low for command)
-#     - RST: GPIO 25   (BCM 25) # Reset, low active
+#     - DI:  GPIO 10 (SPI0 MOSI) # SPI data input
+#     - CLK: GPIO 12 (SPI0 SCLK) # SPI clock input
+#     - CS:  GPIO 8  (SPI0 CE0) # Chip selection, low active
+#     - DC:  GPIO 24 # Data/Command selection (high for data, low for command)
+#     - RST: GPIO 25 # Reset, low active
 # - See:
 #   - SSD1305 controller with 128x32 display issue
 #     <https://github.com/rm-hull/luma.oled/issues/309>

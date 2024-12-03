@@ -1,4 +1,4 @@
-# Raspberry Pi GPIO
+# Raspberry Pi / GPIO
 
 ## Pin Numbers
 
@@ -6,6 +6,7 @@
   - Raspberry Pi Documentation
     - [Raspberry Pi hardware](<https://www.raspberrypi.com/documentation/computers/raspberry-pi.html>)
       - [GPIO and the 40-pin header](<https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#gpio>)
+        - ![GPIO-Pinout-Diagram-2.png](<https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png>)
         - ![GPIO.png](<https://www.raspberrypi.com/documentation/computers/images/GPIO.png>)
 
 ## Pin Functions

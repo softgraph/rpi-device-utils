@@ -14,6 +14,21 @@
     - [pwm-fan.rpi-3.local.dts](./pwm-fan.rpi-3.local.dts)
     - [pwm-fan.rpi-4.local.dts](./pwm-fan.rpi-4.local.dts)
 
+## GPIO Pins
+
+| #  |        |  |
+|----|--------|--|
+| 1  | (3.3V) | **5V** |
+| 3  | -      | **5V** |
+| 5  | -      | **GND** |
+| 7  | -      | - |
+| 9  | (GND)  | - |
+| 11 | -      | **GPIO 18** |
+| 13 | -      | **GND** |
+
+- See also:
+  - [Raspberry Pi / GPIO](<../../Raspberry Pi/gpio.md>)
+
 ## Technical Notes
 
 - [Device Tree](<Device Tree.md>)

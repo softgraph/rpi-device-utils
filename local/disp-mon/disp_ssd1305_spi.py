@@ -31,12 +31,12 @@
 from demo_opts import get_device
 from disp_gpio import ensure_gpio_ready
 
-def configure_device(contextName):
+def configure_device(contextName, width, height):
     # Ensure GPIO is ready
     ensure_gpio_ready(contextName)
 
     # Get device for SSD1306 connected via SPI
-    device = get_device(actual_args=['--display=ssd1306', '--width=128', '--height=32', '--interface=spi'])
+    device = get_device(actual_args=['--display=ssd1306', f"--width={width}", f"--height={height}", '--interface=spi'])
 
     # Configure for SSD1305
 
@@ -49,9 +49,10 @@ def configure_device(contextName):
 	#   - Alternative COM pin configuration (0x10)
     device.command(0xDA, 0x12)
 
-    # - Shift column start/end addresses
-    device._colstart += 4 # 0 -> 4
-    device._colend += 4   # 128 -> 132
+    if width == 128:
+        # - Shift column start/end addresses
+        device._colstart += 4 # 0 -> 4
+        device._colend   += 4 # 128 -> 132
 
     return device
 

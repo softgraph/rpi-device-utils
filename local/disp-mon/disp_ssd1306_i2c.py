@@ -26,8 +26,8 @@
 
 from demo_opts import get_device
 
-def configure_device(contextName):
+def configure_device(contextName, width, height):
     # Get device for SSD1306 connected via I2C
-    return get_device(actual_args=['--display=ssd1306', '--width=128', '--height=32', '--rotate=2', '--interface=i2c'])
+    return get_device(actual_args=['--display=ssd1306', f"--width={width}", f"--height={height}", '--rotate=2', '--interface=i2c'])
 
 #----------------------------------------

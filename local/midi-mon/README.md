@@ -6,10 +6,11 @@
 - To setup `midi_mon.pl` on the device, see:
   - [rpi_setup_midi_mon.sh](../../rpi_setup_midi_mon.sh)
 
-## Source Code
+## Source Code Example
 
-- Here is an example.
+- [midi_mon.rpi-1.local.service](midi_mon.rpi-1.local.service)
   - [midi_mon.rpi-1.local.pl](midi_mon.rpi-1.local.pl)
+    - [aconnect_x.pl](aconnect_x.pl)
 
 ## Technical Notes
 
@@ -58,6 +59,34 @@ client 24: 'U2MIDI Pro' [type=kernel,card=2]
         Connected From: 20:0
 client 28: 'UM-ONE' [type=kernel,card=3]
     0 'UM-ONE MIDI 1   '
+```
+
+```shell
+$ ./aconnect_x.pl 
+# Dev: Device
+# In:  Device's Input Port
+# Out: Device's Output Port
+# Src: Connected Source Port
+# Dst: Connected Destination Port
+# Con: Connected Devices
+Dev 0   'System' [type=kernel]
+In  0:0 'System:0' 'Timer           '
+In  0:1 'System:1' 'Announce        '
+Dev 14   'Midi Through' [type=kernel]
+In  14:0 'Midi Through:0' 'Midi Through Port-0'
+Out 14:0 'Midi Through:0' 'Midi Through Port-0'
+Dev 20   'MPK mini 3' [type=kernel,card=1]
+In  20:0 'MPK mini 3:0' 'MPK mini 3 MIDI 1'
+Out 20:0 'MPK mini 3:0' 'MPK mini 3 MIDI 1'
+Src 20:0 -> 24:0
+Dev 24   'U2MIDI Pro' [type=kernel,card=2]
+In  24:0 'U2MIDI Pro:0' 'U2MIDI Pro MIDI 1'
+Out 24:0 'U2MIDI Pro:0' 'U2MIDI Pro MIDI 1'
+Dst 24:0 <- 20:0
+Dev 28   'UM-ONE' [type=kernel,card=3]
+In  28:0 'UM-ONE:0' 'UM-ONE MIDI 1   '
+Out 28:0 'UM-ONE:0' 'UM-ONE MIDI 1   '
+Con 'MPK mini 3:0' -> 'U2MIDI Pro:0'
 ```
 
 ### USB Specifications

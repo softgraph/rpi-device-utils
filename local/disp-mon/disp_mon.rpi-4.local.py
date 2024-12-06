@@ -18,8 +18,8 @@ def main():
     try:
         width = 128
         height = 32
-        device = configure_device(contextName, width, height)
-        monitor(device, contextName, width, height)
+        device = configure_device(width, height, contextName)
+        monitor(device, width, height, contextName)
     except KeyboardInterrupt:
         pass
 

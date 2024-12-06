@@ -31,7 +31,7 @@
 from demo_opts import get_device
 from disp_gpio import ensure_gpio_ready
 
-def configure_device(contextName, width, height):
+def configure_device(width, height, contextName):
     # Ensure GPIO is ready
     ensure_gpio_ready(contextName)
 

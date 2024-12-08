@@ -4,7 +4,7 @@
 # Show IP addresses of hosts.
 #
 # [USAGE]
-#   - `./rpi_show_address.sh [OPTIONS]`
+#   - `./rpi_show_address.sh [OPTIONS] [TYPES]`
 #
 # [OPTIONS]
 #   - `-s TARGETS_FILE`
@@ -12,12 +12,14 @@
 #     `-t USER@HOSTNAME`
 #   - If neither `-s` or `-t` is given, `targets` file is used instead.
 #
-# [REQUIREMENT]
-# - macOS
-#   - `dscacheutil`
-# - Linux
-#   - `avahi-resolve-host-name`
-#     - Install `avahi-utils` package for the command.
+# [TYPES]
+#   - `inet`
+#   - `inet6`
+#   - `ether`
+#   - `loop`
+#   - `RX`
+#   - `TX`
+#   - If no type is given, `inet` is used instead.
 #---------------------------------------
 
 set -u
@@ -31,16 +33,27 @@ function end_proc {
 }
 
 function do_proc {
-    if [ $# -eq 1 ] ; then
+    if [ $# -ge 1 ] ; then
         target=$1
         host=${target#*@}
-        if type dscacheutil > /dev/null 2>&1 ; then
-            echo "--- ${host} ---"
-            dscacheutil -q host -a name ${host} | grep -e 'address'
-        elif type avahi-resolve-host-name > /dev/null 2>&1 ; then
-            echo "--- ${host} ---"
-            avahi-resolve-host-name -4 ${host}
-            avahi-resolve-host-name -6 ${host}
+        if [ $# -eq 2 ] ; then
+            types=" $2 "
+        elif [ $# -eq 3 ] ; then
+            types=" $2 | $3 "
+        elif [ $# -eq 4 ] ; then
+            types=" $2 | $3 | $4 "
+        elif [ $# -eq 5 ] ; then
+            types=" $2 | $3 | $4 | $5 "
+        elif [ $# -eq 6 ] ; then
+            types=" $2 | $3 | $4 | $5 | $6 "
+        elif [ $# -eq 7 ] ; then
+            types=" $2 | $3 | $4 | $5 | $6 | $7 "
+        else
+            types=" inet "
+        fi
+        echo "--- ${host} ---"
+        if ping -q -c 1 -t 1 ${host} | grep "1 packets received" > /dev/null 2>&1 ; then
+            ssh ${target} "/usr/sbin/ifconfig | egrep ': flags=|$types'"
         fi
     fi
 }

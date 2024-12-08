@@ -37,10 +37,11 @@ function do_proc {
                 systemctl --user disable midi_mon ; \
                 pkill -f 'perl .*/midi_mon\.pl' \
             "
-            scp local/midi-mon/aconnect_x.pl            ${target}:local/midi-mon/
+            scp local/midi-mon/aconnect_x               ${target}:local/midi-mon/
             scp local/midi-mon/midi_mon.${host}.pl      ${target}:local/midi-mon/midi_mon.pl
             scp local/midi-mon/midi_mon.${host}.service ${target}:local/midi-mon/midi_mon.service
             ssh ${target} " \
+                chmod +x ~/local/midi-mon/aconnect_x ; \
                 chmod +x ~/local/midi-mon/*.pl ; \
                 cd ~/.config/systemd/user && \
                 ln -fs ~/local/midi-mon/midi_mon.service . ; \

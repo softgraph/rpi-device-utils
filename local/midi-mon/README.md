@@ -42,6 +42,7 @@ Bus 001 Device 005: ID 0582:0168 Roland Corp. UM-ONE
 
 - You can use `aconnect -l` command to see which MIDI devices and ports are available.
   - ALSA sequencer connection manager (`aconnect`) is a utility to connect and disconnect two existing ports on ALSA sequencer system.
+- Also, you can use `local/midi-mon/aconnect_x` command to see the summary of input/output devices.
 - Examples:
 
 ```shell
@@ -62,7 +63,7 @@ client 28: 'UM-ONE' [type=kernel,card=3]
 ```
 
 ```shell
-$ ./aconnect_x.pl 
+$ ~/local/midi-mon/aconnect_x
 # Dev: Device
 # In:  Device's Input Port
 # Out: Device's Output Port

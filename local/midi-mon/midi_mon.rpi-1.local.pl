@@ -119,7 +119,7 @@ sub run_loop {
 
 # Update midi device list.
 sub update_midi_device_list {
-	@midi_device_list = `./aconnect_x.pl`;
+	@midi_device_list = `~/local/midi-mon/aconnect_x`;
 }
 
 # Export midi connection list.

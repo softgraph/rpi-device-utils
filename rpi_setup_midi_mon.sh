@@ -37,9 +37,9 @@ function do_proc {
                 systemctl --user disable midi_mon ; \
                 pkill -f 'perl .*/midi_mon\.pl' \
             "
-            scp local/midi-mon/aconnect_x               ${target}:local/midi-mon/
-            scp local/midi-mon/midi_mon.${host}.pl      ${target}:local/midi-mon/midi_mon.pl
-            scp local/midi-mon/midi_mon.${host}.service ${target}:local/midi-mon/midi_mon.service
+            scp local/midi-mon/aconnect_x          ${target}:local/midi-mon/
+            scp local/midi-mon/midi_mon.${host}.pl ${target}:local/midi-mon/midi_mon.pl
+            scp local/midi-mon/midi_mon.service    ${target}:local/midi-mon/
             ssh ${target} " \
                 chmod +x ~/local/midi-mon/aconnect_x ; \
                 chmod +x ~/local/midi-mon/*.pl ; \

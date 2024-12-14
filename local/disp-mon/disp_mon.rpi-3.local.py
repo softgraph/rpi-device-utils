@@ -17,8 +17,8 @@ contextName = os.path.basename(__file__)
 def main():
     try:
         width = 128
-        height = 32
-        device = configure_device(contextName, width, height, 'ssd1305', 'spi')
+        height = 64
+        device = configure_device(contextName, width, height, 'ssd1309', 'spi')
         monitor(device, contextName, width, height)
     except KeyboardInterrupt:
         pass

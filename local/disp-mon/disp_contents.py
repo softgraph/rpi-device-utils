@@ -18,7 +18,7 @@ disp_temperatures = deque([], maxlen = 128)
 
 DURATION_PER_PAGE = 2
 
-def monitor(device, width, height, contextName):
+def monitor(device, contextName, width, height):
     while True:
         update_disp_lines()
         page_num = 1

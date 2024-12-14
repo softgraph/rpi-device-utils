@@ -10,7 +10,7 @@
 import os.path
 
 from disp_contents import monitor
-from disp_ssd1306_i2c import configure_device
+from disp_device import configure_device
 
 contextName = os.path.basename(__file__)
 
@@ -18,8 +18,8 @@ def main():
     try:
         width = 128
         height = 32
-        device = configure_device(width, height, contextName)
-        monitor(device, width, height, contextName)
+        device = configure_device(contextName, width, height, 'ssd1306', 'i2c', clockwiseRotation = 180)
+        monitor(device, contextName, width, height)
     except KeyboardInterrupt:
         pass
 

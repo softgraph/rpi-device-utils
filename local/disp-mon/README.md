@@ -6,10 +6,11 @@
 - To setup `disp_mon.py` on the device, see:
   - [rpi_setup_oled_mon.sh](../../rpi_setup_oled_mon.sh)
 
-### `Luma.OLED`
+### `luma.oled`
 
-- Python module `Luma.OLED` is required. For the details, see:
-  - [Luma.OLED](<luma.oled.md>)
+- Python module `luma.oled` is required.
+- For the details, see:
+  - [`luma.oled`](<luma.oled.md>)
 
 ### I2C
 

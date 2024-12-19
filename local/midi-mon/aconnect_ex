@@ -28,7 +28,7 @@
 # Extend `aconnect`.
 #
 # [USAGE]
-# - `aconnect_x.pl [OPTIONS]`
+# - `aconnect_ex [OPTIONS]`
 #   - Print formatted output of `aconnect -l`.
 #
 # [OPTIONS]

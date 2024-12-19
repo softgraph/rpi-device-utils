@@ -28,21 +28,20 @@ function do_proc {
         target=$1
         user=${target%@*}
         host=${target#*@}
-        if [ -f local/midi-mon/midi_mon.${host}.pl ] ; then
+        if [ -f local/midi-mon/midi_mon.${host}.py ] ; then
             echo "--- ${target} ---"
             ssh ${target} " \
                 mkdir -p ~/.config/systemd/user ; \
                 mkdir -p ~/local/midi-mon && \
                 systemctl --user stop midi_mon ; \
                 systemctl --user disable midi_mon ; \
-                pkill -f 'perl .*/midi_mon\.pl' \
+                pkill -f 'python midi_mon\.py' \
             "
-            scp local/midi-mon/aconnect_x          ${target}:local/midi-mon/
-            scp local/midi-mon/midi_mon.${host}.pl ${target}:local/midi-mon/midi_mon.pl
+            scp local/midi-mon/aconnect_ex         ${target}:local/midi-mon/
+            scp local/midi-mon/midi_mon.${host}.py ${target}:local/midi-mon/midi_mon.py
             scp local/midi-mon/midi_mon.service    ${target}:local/midi-mon/
             ssh ${target} " \
-                chmod +x ~/local/midi-mon/aconnect_x ; \
-                chmod +x ~/local/midi-mon/*.pl ; \
+                chmod +x ~/local/midi-mon/aconnect_ex ; \
                 cd ~/.config/systemd/user && \
                 ln -fs ~/local/midi-mon/midi_mon.service . ; \
                 loginctl enable-linger ${user} ; \
@@ -52,7 +51,7 @@ function do_proc {
             ssh ${target} " \
                 ps -x -o pid,ppid,user,cmd | \
                 grep -v grep | \
-                egrep 'perl .*/midi_mon\.pl' \
+                egrep 'python midi_mon\.py' \
             "
         fi
     fi

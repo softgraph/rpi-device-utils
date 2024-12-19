@@ -6,11 +6,17 @@
 - To setup `midi_mon.pl` on the device, see:
   - [rpi_setup_midi_mon.sh](../../rpi_setup_midi_mon.sh)
 
+### `RPi.GPIO`
+
+- Python module `RPi.GPIO` is required.
+- For the details, see:
+  - [`RPi.GPIO`](<RPi.GPIO.md>)
+
 ## Source Code Example
 
-- [midi_mon.rpi-1.local.service](midi_mon.rpi-1.local.service)
-  - [midi_mon.rpi-1.local.pl](midi_mon.rpi-1.local.pl)
-    - [aconnect_x.pl](aconnect_x.pl)
+- [midi_mon.service](midi_mon.service)
+  - [midi_mon.rpi-1.local.py](midi_mon.rpi-1.local.py)
+    - [aconnect_ex](aconnect_ex)
 
 ## Technical Notes
 

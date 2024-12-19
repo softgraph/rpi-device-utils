@@ -47,7 +47,9 @@ def update_disp_lines():
         try:
             with open(filepath) as file:
                 for line in file:
-                    disp_lines.append(line.rstrip())
+                    line = line.rstrip()
+                    if len(line) > 0:
+                        disp_lines.append(line)
         except (FileNotFoundError, PermissionError):
             pass
 

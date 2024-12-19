@@ -1,5 +1,5 @@
 [Unit]
-Description=disp_mon
+Description=Display Monitor
 
 [Service]
 Type=simple

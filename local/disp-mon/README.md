@@ -81,8 +81,8 @@
 ### 128×64 OLED Display with SSD1309 display driver connected via SPI
 
 - [disp_mon.service](disp_mon.service)
-  - [disp_mon.rpi-2.local.py](disp_mon.rpi-1.local.py)
-  - [disp_mon.rpi-3.local.py](disp_mon.rpi-1.local.py)
+  - [disp_mon.rpi-2.local.py](disp_mon.rpi-2.local.py)
+  - [disp_mon.rpi-3.local.py](disp_mon.rpi-3.local.py)
     - [disp_device.py](<disp_device.py>)
       - [demo_opts.py](<demo_opts.py>)
     - [disp_contents.py](<disp_contents.py>)

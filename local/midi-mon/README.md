@@ -2,7 +2,7 @@
 
 ## Setup
 
-- `midi_mon.pl` is a perl script to periodically check the connection between two midi devices.
+- `midi_mon.py` is a python program to periodically check the connection between two midi devices.
 - To setup `midi_mon.pl` on the device, see:
   - [rpi_setup_midi_mon.sh](../../rpi_setup_midi_mon.sh)
 

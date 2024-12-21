@@ -24,18 +24,20 @@ AUTO_CONNECT_DST_PORT = "U2MIDI Pro:0"
 
 TICK_TIME_IN_SECONDS = 0.1
 TICK_COUNT_DEPRESSED = 2
-TICK_COUNT_UPDATE = 5
+TICK_COUNT_UPDATE = 10
 
-GPIO_KEY_0 = 26
-GPIO_KEY_1 = 19
-GPIO_KEY_2 = 13
-GPIO_KEY = GPIO_KEY_1
+GPIO_KEYS = [   # Pin #39 = GND
+    26,         # Pin #37 = GPIO 26
+    19,         # Pin #35 = GPIO 19
+    13]         # Pin #33 = GPIO 13
+GPIO_KEY_NUM = len(GPIO_KEYS)
+GPIO_KEY_TOGGLE_MODE = 1
 
 contextName = os.path.basename(__file__)
-logging.basicConfig(format = '%(levelname)s, %(message)s', level = logging.INFO)
+logging.basicConfig(format = "%(message)s", level = logging.INFO) # configure handler
 logger = logging.getLogger()
 
-gpio_key = 0
+gpio_initialized = False
 
 midi_src_ports = deque([])
 midi_dst_ports = deque([])
@@ -43,52 +45,60 @@ midi_con_pairs = deque([])
 
 def main():
     try:
-        monitor(contextName)
+        monitor()
     except KeyboardInterrupt:
         pass
     finally:
         finalize_gpio()
 
 def initialize_gpio():
+    global gpio_initialized
     try:
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(GPIO_KEY, GPIO.IN, pull_up_down = GPIO.PUD_UP)
-        global gpio_key
-        gpio_key = GPIO_KEY
-        logger.info(f"[{contextName}] GPIO, initialized")
+        for key in GPIO_KEYS:
+            GPIO.setup(key, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+        gpio_initialized = True
+        logger.info(f"{contextName}: GPIO is initialized")
         time.sleep(0.1)
     except:
         pass
 
 def finalize_gpio():
-    global gpio_key
-    if gpio_key > 0:
-        GPIO.cleanup(gpio_key)
-    gpio_key = 0
-    logger.info(f"[{contextName}] GPIO, finalized")
+    global gpio_initialized
+    if gpio_initialized:
+        for key in GPIO_KEYS:
+            GPIO.cleanup(key)
+    gpio_initialized = False
+    logger.info(f"{contextName}: GPIO is finalized")
 
-def read_gpio_key():
-    # returns True if pressed
-    if gpio_key == 0:
+def read_gpio_keys():
+    global gpio_initialized
+    gpio_keys = [False] * GPIO_KEY_NUM
+    if not gpio_initialized:
         initialize_gpio()
-    if gpio_key > 0:
-        return not GPIO.input(gpio_key)
-    else:
-        return False
+    if gpio_initialized:
+        for i in range(GPIO_KEY_NUM):
+            gpio_keys[i] = not GPIO.input(GPIO_KEYS[i]) # True if pressed
+    return gpio_keys
 
-def monitor(contextName):
+def monitor():
     is_active = True
-    pressed_count = 0
+    pressed_count = [0] * GPIO_KEY_NUM
     idle_count = 0
     while True:
-        # Check the State of Key
-        if read_gpio_key():
-            pressed_count += 1
-        elif pressed_count > 0:
-            pressed_count = 0
+        # Read GPIO Keys
+        gpio_keys = read_gpio_keys()
 
-        if pressed_count == TICK_COUNT_DEPRESSED:
-            # Handle Depressed Key
+        # Update Key Pressed Counts
+        if len(gpio_keys) == GPIO_KEY_NUM:
+            for i in range(GPIO_KEY_NUM):
+                if gpio_keys[i]:
+                    pressed_count[i] += 1
+                elif pressed_count[i] > 0:
+                    pressed_count[i] = 0
+
+        # Handle Key Depressed (Toggle Mode)
+        if pressed_count[GPIO_KEY_TOGGLE_MODE] == TICK_COUNT_DEPRESSED:
             if is_active:
                 is_active = False
                 deactivate()
@@ -99,8 +109,8 @@ def monitor(contextName):
                 update_active()
             idle_count = 0
 
+        # Handle Update
         elif idle_count >= TICK_COUNT_UPDATE:
-            # Handle Update
             if is_active:
                 update_active()
             else:
@@ -111,18 +121,18 @@ def monitor(contextName):
         idle_count += 1
 
 def deactivate():
-    logger.info(f"[{contextName}] Deactivated")
+    logger.info(f"{contextName}: MIDI Monitor is deactivated")
     disconnect_midi()
 
 def activate():
-    logger.info(f"[{contextName}] Activated")
+    logger.info(f"{contextName}: MIDI Monitor is activated")
     pass
 
 def update_inactive():
     try:
         os.makedirs(D_DISP_MON, exist_ok = True)
         with open(F_DISP_MON, "w") as file:
-            file.write('midi-mon: disabled')
+            file.write('MIDI: Disabled')
     except (FileNotFoundError, PermissionError):
         pass
 
@@ -139,14 +149,14 @@ def update_active():
         os.makedirs(D_DISP_MON, exist_ok = True)
         with open(F_DISP_MON, 'w') as file:
             for pair in midi_con_pairs:
-                file.write(f"{pair[0]} >>>\n")
-                file.write(f">>> {pair[1]}\n")
+                file.write(f"{pair[0]}  >>>\n")
+                file.write(f"\t\t>>>  {pair[1]}\n")
     except (FileNotFoundError, PermissionError):
         pass
 
 def disconnect_midi(disconnect_all = True):
     if disconnect_all:
-        logger.info(f"[{contextName}] Run, aconnect, -x")
+        logger.info(f"{contextName}: Run `aconnect -x`")
         subprocess.run(["aconnect", "-x"])
         update_midi()
 
@@ -162,7 +172,7 @@ def connect_midi(src_port, dst_port):
             dst_valid = True
             break
     if src_valid and dst_valid:
-        logger.info(f"[{contextName}] Run, aconnect, '{src_port}', '{dst_port}'")
+        logger.info(f"{contextName}: Run `aconnect '{src_port}' '{dst_port}'`")
         subprocess.run(["aconnect", f"{src_port}", f"{dst_port}"])
         update_midi()
 

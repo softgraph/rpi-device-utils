@@ -1,4 +1,4 @@
-# Display Monitor (`disp-mon`)
+# Display and Monitor (`disp-mon`)
 
 ## Setup
 
@@ -11,6 +11,14 @@
 - Python module `luma.oled` is required.
 - For the details, see:
   - [`luma.oled`](<luma.oled.md>)
+
+### `RPi.GPIO`
+
+- Python module `RPi.GPIO` is required for the following cases.
+  - The OLED display is connected via SPI
+  - Buttons are connected via GPIO
+- For the details, see:
+  - [`RPi.GPIO`](<RPi.GPIO.md>)
 
 ### I2C
 
@@ -26,18 +34,21 @@
 
 ## Source Code Examples
 
-### 128x32 OLED Display with SSD1306 display driver connected via I2C
+### 128 x 32 or 64 OLED Display with SSD1306 display driver connected via I2C
 
 - [disp_mon.service](disp_mon.service)
-  - [disp_mon.rpi-1.local.py](disp_mon.rpi-1.local.py)
+  - [disp_mon.rpi-1.local.py](disp_mon.rpi-1.local.py) (128 x 64)
+  - [disp_mon.rpi-2.local.py](disp_mon.rpi-2.local.py) (128 x 32)
     - [disp_device.py](<disp_device.py>)
       - [demo_opts.py](<demo_opts.py>)
     - [disp_contents.py](<disp_contents.py>)
 
 - Display Module
-  - Clone of
-    - 0.9 inch 128x32 OLED For Raspberry Pi
+  - 0.9 inch 128 x 32 OLED Display For Raspberry Pi
+    - Clone of
       - <https://www.adafruit.com/product/3527>
+  - 0.96 inch 128 x 64 OLED Display For Raspberry Pi
+    - Similar to the above, but 128 x 64.
 
 - Display Interface
   - Type: I2C
@@ -50,7 +61,7 @@
 | SDA    | GPIO 2 (BSC1 SDA) | I2C Data |
 | SCL    | GPIO 3 (BSC1 SCL) | I2C Clock |
 
-### 128x32 OLED Display with SSD1305 display driver connected via SPI
+### 128 x 32 OLED Display with SSD1305 display driver connected via SPI
 
 - [disp_mon.service](disp_mon.service)
   - [disp_mon.rpi-4.local.py](disp_mon.rpi-4.local.py)
@@ -78,10 +89,9 @@
 - ***1**: Low = Active
 - ***2**: Low = Command, High = Data
 
-### 128×64 OLED Display with SSD1309 display driver connected via SPI
+### 128 × 64 OLED Display with SSD1309 display driver connected via SPI
 
 - [disp_mon.service](disp_mon.service)
-  - [disp_mon.rpi-2.local.py](disp_mon.rpi-2.local.py)
   - [disp_mon.rpi-3.local.py](disp_mon.rpi-3.local.py)
     - [disp_device.py](<disp_device.py>)
       - [demo_opts.py](<demo_opts.py>)
@@ -127,3 +137,17 @@
 
 - See also:
   - [Raspberry Pi / GPIO](<../../Raspberry Pi/gpio.md>)
+
+## Technical Notes
+
+### User Service (`systemd`)
+
+- The following user service is used for `disp-mon`.
+  - [disp_mon.service](disp_mon.service)
+
+- Run the command below to show the logging for the service.
+
+```shell
+$ journalctl --no-pager -b --user -u disp_mon
+:
+```

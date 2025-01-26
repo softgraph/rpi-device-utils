@@ -2,113 +2,174 @@
 # Display Contents
 #
 # [USAGE]
-# - `from disp_contents import monitor`
-# - `monitor(device, contextName)`
+# - `import disp_contents`
+# - `import time`
+# - `disp_contents.init(device, context_name, width, height)`
+# - `i = 0`
+# - `while True:`
+# - `    i = disp_contents.update_and_draw(i)`
+# - `    time.sleep(1)`
 #----------------------------------------
 
-from collections import deque
+import collections
 import datetime
 from glob import iglob
-import time
 
 from luma.core.render import canvas # type: ignore
 from PIL import ImageFont # type: ignore
 
-DURATION_PER_PAGE = 2
+#----------------------------------------
+# Non-public Parameters
+#----------------------------------------
 
-TEXT_ALIGN_LEFT = 0
-TEXT_ALIGN_CENTER = 1
-TEXT_ALIGN_RIGHT = 2
+_DURATION_PER_PAGE = 2
 
-TEXT_VALIGN_TOP = 0
-TEXT_VALIGN_CENTER = 1
-TEXT_VALIGN_BOTTOM = 2
+#----------------------------------------
+# Non-public Constants
+#----------------------------------------
 
-disp_lines = deque([])
-disp_temperatures = deque([], maxlen = 128)
+_TEXT_ALIGN_LEFT = 0
+_TEXT_ALIGN_CENTER = 1
+_TEXT_ALIGN_RIGHT = 2
 
-bounding_box = None
-default_font = None
+_TEXT_VALIGN_TOP = 0
+_TEXT_VALIGN_CENTER = 1
+_TEXT_VALIGN_BOTTOM = 2
 
-def load_defaults(device):
-    global bounding_box
-    global default_font
-    if bounding_box == None:
-        bounding_box = device.bounding_box
-    if default_font == None:
-        default_font = ImageFont.load_default()
+#----------------------------------------
+# Non-public Variables
+#----------------------------------------
 
-def monitor(device, contextName, width, height):
-    load_defaults(device)
-    while True:
-        update_disp_lines()
-        page_num = 1
-        if height == 32:
-            # pages: (No Line), (Line 1). (Line 2), (Line 3), ...
-            page_num = count_page_num(line_num = len(disp_lines), line_num_per_page = 1)
-            page_num += 1   # add the first page
-        elif height == 64:
-            # pages: (Line 1, 2), (Line 3, 4), (Line 5, 6), ...
-            page_num = count_page_num(line_num = len(disp_lines), line_num_per_page = 2)
-            if page_num == 0:
-                page_num = 1    # the first page only
-        max = page_num * DURATION_PER_PAGE
-        for i in range(max):
-            update_disp_temperatures()
-            with canvas(device) as dc:
-                draw_page(dc, width, height, page = i // DURATION_PER_PAGE)
-            time.sleep(1)
+_device = None
+_context_name = None
+_page_width = None
+_page_height = None
+_bounding_box = None
+_default_font = None
 
-def count_page_num(line_num, line_num_per_page):
+_disp_lines = collections.deque([])
+_disp_temperatures = collections.deque([], maxlen = 128)
+
+_max = 0
+
+#----------------------------------------
+# Public Functions
+#----------------------------------------
+
+def init(device, context_name, width, height):
+    global _device
+    global _context_name
+    global _page_width
+    global _page_height
+    global _bounding_box
+    global _default_font
+    _device = device
+    _context_name = context_name
+    _page_width = width
+    _page_height = height
+    _bounding_box = device.bounding_box
+    _default_font = ImageFont.load_default()
+
+# Increment & Draw Contents Periodically
+def increment_and_draw(i):
+    if _max == 0 or i == 0:
+        _refresh_pages()
+    _update_disp_temperatures()
+    draw(i)
+    i += 1
+    if i >= _max:
+        i = 0
+    return i
+
+# Update & Draw Contents
+def update_and_draw():
+    _refresh_pages()
+    i = 0
+    draw(i)
+    return i
+
+# Draw Contents
+def draw(i):
+    with canvas(_device) as dc:
+        _draw_page(dc, page = i // _DURATION_PER_PAGE)
+
+#----------------------------------------
+# Non-public Functions
+#----------------------------------------
+
+def _count_page_num(line_num, line_num_per_page):
     return (line_num + line_num_per_page - 1) // line_num_per_page
 
-def update_disp_lines():
-    disp_lines.clear()
+def _refresh_pages():
+    global _max
+    _update_disp_lines()
+    page_num = 1
+    if _page_height == 32:
+        # pages: (No Line), (Line 1). (Line 2), (Line 3), ...
+        page_num = _count_page_num(line_num = len(_disp_lines), line_num_per_page = 1)
+        page_num += 1   # add the first page
+    elif _page_height == 64:
+        # pages: (Line 1, 2), (Line 3, 4), (Line 5, 6), ...
+        page_num = _count_page_num(line_num = len(_disp_lines), line_num_per_page = 2)
+        if page_num == 0:
+            page_num = 1    # the first page only
+    _max = page_num * _DURATION_PER_PAGE
+
+def _update_disp_lines():
+    _disp_lines.clear()
     for filepath in iglob('/var/tmp/local/disp-mon/*.txt'):
         try:
             with open(filepath) as file:
                 for line in file:
                     line = line.rstrip()
                     if len(line) > 0:
-                        disp_lines.append(line)
+                        _disp_lines.append(line)
         except (FileNotFoundError, PermissionError):
             pass
 
-def update_disp_temperatures():
+def _update_disp_temperatures():
     try:
         with open('/sys/class/thermal/thermal_zone0/temp') as file:
             temp = int(file.read())
-            disp_temperatures.append(temp)
+            _disp_temperatures.append(temp)
     except (FileNotFoundError, PermissionError):
         pass
 
-def draw_page(dc, width, height, page):
-    if height == 32:
-        draw_header(dc, width, base_y = 0)
+def _draw_page(dc, page):
+    if _page_height == 32:
+        _draw_header(dc, _page_width, base_y = 0)
         if page == 0:
-            draw_temperature_map(dc, width, base_y = 0)
+            _draw_temperature_map(dc, _page_width, base_y = 0)
         else:
-            draw_line(dc, width, base_y = 16, index = page - 1)
-    elif height == 64:
-        draw_header(dc, width, base_y = 0)
-        draw_temperature_map(dc, width, base_y = 0)
-        draw_line(dc, width, base_y = 32, index = page * 2)
-        draw_line(dc, width, base_y = 48, index = page * 2 + 1)
+            _draw_line(dc, _page_width, base_y = 16, index = page - 1)
+    elif _page_height == 64:
+        _draw_header(dc, _page_width, base_y = 0)
+        _draw_temperature_map(dc, _page_width, base_y = 0)
+        _draw_line(dc, _page_width, base_y = 32, index = page * 2)
+        _draw_line(dc, _page_width, base_y = 48, index = page * 2 + 1)
     else:
-        draw_header(dc, width, base_y = 0)
+        _draw_header(dc, _page_width, base_y = 0)
 
-def draw_header(dc, width, base_y):
+def _draw_header(dc, width, base_y):
+    # Draw Rectangle
+    # dc.rectangle(_bounding_box, outline = "white")
+
+    # Draw Temperature
+    if len(_disp_temperatures) > 0:
+        temp = _disp_temperatures[-1]
+        str_temp = "{:.2f} °C".format(temp / 1000)
+    else:
+        str_temp = ""
+    _draw_text(dc, width, base_y, str_temp, _TEXT_ALIGN_LEFT, _TEXT_VALIGN_TOP)
+
+    # Draw Time
     now = datetime.datetime.now()
     str_time = now.strftime("%H:%M:%S")
-    temp = disp_temperatures[-1]
-    str_temp = "{:.2f} °C".format(temp / 1000)
-    # dc.rectangle(bounding_box, outline = "white")
-    draw_text(dc, width, base_y, str_temp, TEXT_ALIGN_LEFT, TEXT_VALIGN_TOP)
-    draw_text(dc, width, base_y, str_time, TEXT_ALIGN_RIGHT, TEXT_VALIGN_TOP)
+    _draw_text(dc, width, base_y, str_time, _TEXT_ALIGN_RIGHT, _TEXT_VALIGN_TOP)
 
-def draw_temperature_map(dc, width, base_y):
+def _draw_temperature_map(dc, width, base_y):
     x = 0
-    for temp in disp_temperatures:
+    for temp in _disp_temperatures:
         y = - int(temp / 1000) + 66
         if y < 0:
             y = 0
@@ -117,36 +178,36 @@ def draw_temperature_map(dc, width, base_y):
         dc.point((x, base_y + y), fill="white")
         x += 1
 
-def draw_line(dc, width, base_y, index):
-    if index >= 0 and index < len(disp_lines):
-        line = disp_lines[index]
+def _draw_line(dc, width, base_y, index):
+    if index >= 0 and index < len(_disp_lines):
+        line = _disp_lines[index]
         if len(line) > 1 and line[0] == "\t":
             if len(line) > 2 and line[1] == "\t":
                 line = line.lstrip()
-                draw_text(dc, width, base_y, line, TEXT_ALIGN_RIGHT, TEXT_VALIGN_BOTTOM)
+                _draw_text(dc, width, base_y, line, _TEXT_ALIGN_RIGHT, _TEXT_VALIGN_BOTTOM)
             else:
                 line = line.lstrip()
-                draw_text(dc, width, base_y, line, TEXT_ALIGN_CENTER, TEXT_VALIGN_BOTTOM)
+                _draw_text(dc, width, base_y, line, _TEXT_ALIGN_CENTER, _TEXT_VALIGN_BOTTOM)
         else:
-            draw_text(dc, width, base_y, line, TEXT_ALIGN_LEFT, TEXT_VALIGN_BOTTOM)
+            _draw_text(dc, width, base_y, line, _TEXT_ALIGN_LEFT, _TEXT_VALIGN_BOTTOM)
 
-def draw_text(dc, width, base_y, text, align, valigh):
-    if align == TEXT_ALIGN_RIGHT:
-        font_width = default_font.getlength(text)
+def _draw_text(dc, width, base_y, text, align, valigh):
+    if align == _TEXT_ALIGN_RIGHT:
+        font_width = _default_font.getlength(text)
         font_width += len(text) * 0.25 # magic
         x = (width - font_width) // 1
-    elif align == TEXT_ALIGN_CENTER:
-        font_width = default_font.getlength(text)
+    elif align == _TEXT_ALIGN_CENTER:
+        font_width = _default_font.getlength(text)
         font_width += len(text) * 0.25 # magic
         x = (width - font_width) // 2
     else:
         x = 0
-    if valigh == TEXT_VALIGN_BOTTOM:
+    if valigh == _TEXT_VALIGN_BOTTOM:
         y = base_y + 5
-    elif valigh == TEXT_VALIGN_CENTER:
+    elif valigh == _TEXT_VALIGN_CENTER:
         y = base_y + 2
     else:
         y = base_y - 1
-    dc.text((x, y), text, fill = "white", font = default_font)
+    dc.text((x, y), text, fill = "white", font = _default_font)
 
 #----------------------------------------

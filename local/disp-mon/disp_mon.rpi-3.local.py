@@ -9,21 +9,51 @@
 
 import os.path
 
-from disp_contents import monitor
-from disp_device import configure_device
+import disp_contents
+import disp_device
 
-contextName = os.path.basename(__file__)
+import event_mon
 
-def main():
+#----------------------------------------
+# Non-public Parameters
+#----------------------------------------
+
+_EVENT_QUIT = event_mon.EVENT_QUIT
+_EVENT_INCREMENT_AND_DRAW = event_mon.EVENT_COUNT_1000_MS
+
+#----------------------------------------
+# Non-public Variables
+#----------------------------------------
+
+_context_name = os.path.basename(__file__)
+
+#----------------------------------------
+# Non-public Functions
+#----------------------------------------
+
+def _main():
     try:
         width = 128
         height = 64
-        device = configure_device(contextName, width, height, 'ssd1309', 'spi')
-        monitor(device, contextName, width, height)
+        device = disp_device.configure(_context_name, width, height, 'ssd1309', 'spi')
+        disp_contents.init(device, _context_name, width, height)
+        event_mon.init(_context_name)
+        event_mon.start_cyclic_updater()
+        i = 0
+        while True:
+            event = event_mon.get_event()
+            if event == _EVENT_QUIT:
+                break
+            elif event == _EVENT_INCREMENT_AND_DRAW:
+                i = disp_contents.increment_and_draw(i)
     except KeyboardInterrupt:
         pass
 
+#----------------------------------------
+# Entry Point
+#----------------------------------------
+
 if __name__ == "__main__":
-    main()
+    _main()
 
 #----------------------------------------

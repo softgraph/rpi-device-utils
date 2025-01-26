@@ -37,11 +37,19 @@ function do_proc {
                 systemctl --user disable disp_mon ; \
                 pkill -f 'python disp_mon\.py' \
             "
-            scp local/disp-mon/demo_opts.py        ${target}:local/disp-mon/
-            scp local/disp-mon/disp_contents.py    ${target}:local/disp-mon/
-            scp local/disp-mon/disp_device.py      ${target}:local/disp-mon/
-            scp local/disp-mon/disp_mon.${host}.py ${target}:local/disp-mon/disp_mon.py
-            scp local/disp-mon/disp_mon.service    ${target}:local/disp-mon/
+            scp local/disp-mon/demo_opts.py         ${target}:local/disp-mon/
+            scp local/disp-mon/disp_contents.py     ${target}:local/disp-mon/
+            scp local/disp-mon/disp_device.py       ${target}:local/disp-mon/
+            scp local/disp-mon/disp_mon.${host}.py  ${target}:local/disp-mon/disp_mon.py
+            scp local/disp-mon/disp_mon.service     ${target}:local/disp-mon/
+            scp local/disp-mon/event_mon.py         ${target}:local/disp-mon/
+            if [ -f local/disp-mon/midi_mon.${host}.py ] ; then
+                scp local/midi-mon/aconnect_ex          ${target}:local/disp-mon/
+                scp local/disp-mon/midi_mon.${host}.py  ${target}:local/disp-mon/midi_mon.py
+                ssh ${target} " \
+                    chmod +x ~/local/disp-mon/aconnect_ex ; \
+                "
+            fi
             ssh ${target} " \
                 cd ~/.config/systemd/user && \
                 ln -fs ~/local/disp-mon/disp_mon.service . ; \

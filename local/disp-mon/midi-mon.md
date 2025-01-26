@@ -1,23 +1,5 @@
 # MIDI Monitor (`midi-mon`)
 
-## Setup
-
-- `midi_mon.py` is a python program to periodically check the connection between two midi devices.
-- To setup `midi_mon.pl` on the device, see:
-  - [rpi_setup_midi_mon.sh](../../rpi_setup_midi_mon.sh)
-
-### `RPi.GPIO`
-
-- Python module `RPi.GPIO` is required.
-- For the details, see:
-  - [`RPi.GPIO`](<RPi.GPIO.md>)
-
-## Source Code Example
-
-- [midi_mon.service](midi_mon.service)
-  - [midi_mon.rpi-1.local.py](midi_mon.rpi-1.local.py)
-    - [aconnect_ex](aconnect_ex)
-
 ## Technical Notes
 
 ### USB Audio Device

@@ -83,8 +83,8 @@
 | DIN    | GPIO 10 (SPI0 MOSI) | SPI Data Input |
 | CLK    | GPIO 11 (SPI0 SCLK) | SPI Clock Input |
 | CS     | GPIO 8  (SPI0 CE0)  | Chip Selection (***1**) |
-| DC     | GPIO 24             | Data/Command Selection (***2**)     |
-| RST    | GPIO 25             | Reset (***1**)     |
+| DC     | GPIO 24             | Data/Command Selection (***2**) |
+| RST    | GPIO 25             | Reset (***1**) |
 
 - ***1**: Low = Active
 - ***2**: Low = Command, High = Data
@@ -121,9 +121,9 @@
 
 | Line   | Pin         | #  | #  | Pin         | Line |
 |--------|-------------|----|----|-------------|------|
-|        | **3.3V**    | 1  | 2  | (5V)        |      |
-|        | **GPIO 2**  | 3  | 4  | (5V)        |      |
-|        | **GPIO 3**  | 5  | 6  | **GND**     |      |
+| ***1** | **3.3V**    | 1  | 2  | (5V)        | ***1** |
+| ***1** | **GPIO 2**  | 3  | 4  | (5V)        | ***1** |
+| ***1** | **GPIO 3**  | 5  | 6  | **GND**     | ***1** |
 |        | -           | 7  | 8  | -           |      |
 |        | (GND)       | 9  | 10 | -           |      |
 |        | -           | 11 | 12 | -           |      |
@@ -134,6 +134,19 @@
 |        | -           | 21 | 22 | **GPIO 25** | White |
 | Yellow | **GPIO 11** | 23 | 24 | **GPIO 8**  | Orange |
 |        | (GND)       | 25 | 26 | -           |      |
+|        | -           | 27 | 28 | -           |      |
+|        | -           | 29 | 30 | (GND)       |      |
+|        | -           | 31 | 32 | -           |      |
+| ***2** | **GPIO 13** | 33 | 34 | (GND)       |      |
+| ***2** | **GPIO 19** | 35 | 36 | -           |      |
+| ***2** | **GPIO 26** | 37 | 38 | -           |      |
+| ***2** | (GND)       | 39 | 40 | -           |      |
+
+- Note
+  - ***1**:
+    - GPIO 2 x 3 pin for I2C
+  - ***2**:
+    - GPIO 1 x 4 pin for 3-Button Array
 
 - See also:
   - [Raspberry Pi / GPIO](<../../Raspberry Pi/gpio.md>)

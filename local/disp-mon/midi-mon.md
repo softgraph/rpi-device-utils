@@ -9,12 +9,14 @@
 - Examples:
 
 ```shell
-$ lsusb | sort ; lsusb -t
+$ lsusb | sort
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 Bus 001 Device 002: ID 05e3:0608 Genesys Logic, Inc. Hub
 Bus 001 Device 003: ID 09e8:1049 AKAI  Professional M.I. Corp. MPK mini 3
 Bus 001 Device 004: ID 7104:1400 CME (Central Music Co.) U2MIDI Pro
 Bus 001 Device 005: ID 0582:0168 Roland Corp. UM-ONE
+
+$ lsusb -t
 /:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=dwc_otg/1p, 480M
     |__ Port 1: Dev 2, If 0, Class=Hub, Driver=hub/4p, 480M
         |__ Port 2: Dev 3, If 0, Class=Human Interface Device, Driver=usbhid, 12M
@@ -26,11 +28,17 @@ Bus 001 Device 005: ID 0582:0168 Roland Corp. UM-ONE
         |__ Port 4: Dev 5, If 0, Class=Audio, Driver=snd-usb-audio, 12M
 ```
 
+| Bus     | Device     | I/F      | Description |
+|---------|------------|----------|-------------|
+| Bus 001 | Device 003 | If 1 & 2 | AKAI  Professional M.I. Corp. MPK mini 3 |
+| Bus 001 | Device 004 | If 0 & 1 | CME (Central Music Co.) U2MIDI Pro |
+| Bus 001 | Device 005 | If 0 & 1 | Roland Corp. UM-ONE |
+
 ### USB Midi Device
 
 - You can use `aconnect -l` command to see which MIDI devices and ports are available.
   - ALSA sequencer connection manager (`aconnect`) is a utility to connect and disconnect two existing ports on ALSA sequencer system.
-- Also, you can use `local/midi-mon/aconnect_x` command to see the summary of input/output devices.
+- Also, you can use `local/disp-mon/aconnect_ex` command to see the summary of input/output devices.
 - Examples:
 
 ```shell
@@ -51,7 +59,7 @@ client 28: 'UM-ONE' [type=kernel,card=3]
 ```
 
 ```shell
-$ ~/local/midi-mon/aconnect_x
+$ ~/local/disp-mon/aconnect_ex
 # Dev: Device
 # In:  Device's Input Port
 # Out: Device's Output Port

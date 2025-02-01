@@ -1,8 +1,20 @@
-# MIDI Monitor (`midi-mon`)
+# ALSA sequencer connection manager (`aconnect`)
 
-## Technical Notes
+## References
 
-### USB Audio Device
+### USB Specifications
+
+- usb.org
+  - USB Device Class Definition for Audio Devices
+      <https://www.usb.org/sites/default/files/audio10.pdf>
+  - USB Device Class Definition for MIDI Devices
+      <https://www.usb.org/sites/default/files/midi10.pdf>
+  - USB Device Class Definition for MIDI Devices, Version 2.0
+      <https://www.usb.org/sites/default/files/USB%20MIDI%20v2_0.pdf>
+
+## USB Audio Device
+
+### `lsusb`
 
 - You can use `lsusb` and `lsusb -t` command to see which USB devices and interfaces are available.
 - A USB MIDI device can be seen as a USB "Audio" class device which has at least two "AudioControl (AC)" and "MIDIStreaming (MS)" interfaces.
@@ -34,12 +46,14 @@ $ lsusb -t
 | Bus 001 | Device 004 | If 0 & 1 | CME (Central Music Co.) U2MIDI Pro |
 | Bus 001 | Device 005 | If 0 & 1 | Roland Corp. UM-ONE |
 
-### USB Midi Device
+## USB Midi Device
 
+### `aconnect`
+
+- ALSA sequencer connection manager (`aconnect`) is a utility to connect and disconnect two existing ports on ALSA sequencer system.
 - You can use `aconnect -l` command to see which MIDI devices and ports are available.
-  - ALSA sequencer connection manager (`aconnect`) is a utility to connect and disconnect two existing ports on ALSA sequencer system.
-- Also, you can use `local/disp-mon/aconnect_ex` command to see the summary of input/output devices.
-- Examples:
+
+- Example:
 
 ```shell
 $ aconnect -l
@@ -57,6 +71,12 @@ client 24: 'U2MIDI Pro' [type=kernel,card=2]
 client 28: 'UM-ONE' [type=kernel,card=3]
     0 'UM-ONE MIDI 1   '
 ```
+
+### `aconnect_ex`
+
+- You can use `local/disp-mon/aconnect_ex` command to see the summary of input/output devices.
+
+- Example:
 
 ```shell
 $ ~/local/disp-mon/aconnect_ex
@@ -85,14 +105,3 @@ In  28:0 'UM-ONE:0' 'UM-ONE MIDI 1   '
 Out 28:0 'UM-ONE:0' 'UM-ONE MIDI 1   '
 Con 'MPK mini 3:0' -> 'U2MIDI Pro:0'
 ```
-
-### USB Specifications
-
-- Refer to:
-  - usb.org
-    - USB Device Class Definition for Audio Devices
-      <https://www.usb.org/sites/default/files/audio10.pdf>
-    - USB Device Class Definition for MIDI Devices
-      <https://www.usb.org/sites/default/files/midi10.pdf>
-    - USB Device Class Definition for MIDI Devices, Version 2.0
-      <https://www.usb.org/sites/default/files/USB%20MIDI%20v2_0.pdf>

@@ -5,32 +5,51 @@
 - `disp_mon.py` is a python program to periodically show device status on an OLED display.
 - To setup `disp_mon.py` on the device, see:
   - [rpi_setup_oled_mon.sh](../../rpi_setup_oled_mon.sh)
+- Before the setup, the following preparation is required.
 
-### `luma.oled`
+## Preparation
 
-- Python module `luma.oled` is required.
-- For the details, see:
-  - [`luma.oled`](<luma.oled.md>)
+### Preparation for Raspberry Pi
 
-### `RPi.GPIO`
-
-- Python module `RPi.GPIO` is required for the following cases.
-  - The OLED display is connected via SPI
-  - Buttons are connected via GPIO
-- For the details, see:
-  - [`RPi.GPIO`](<RPi.GPIO.md>)
-
-### I2C
+#### Enabling I2C
 
 - If the display is connected via I2C, run the following commands to enable I2C.
   - `sudo raspi-config nonint do_i2c 0`
   - `sudo reboot`
 
-### SPI
+### Enabling SPI
 
 - If the display is connected via SPI, run the following commands to enable SPI.
   - `sudo raspi-config nonint do_spi 0`
   - `sudo reboot`
+
+### Preparation for Python
+
+#### Steps
+
+- See:
+  - [Preparation](<_notes/preparation.md>)
+
+#### `luma.oled`
+
+- Python module `luma.oled` is required.
+- For the details, see:
+  - [`luma.oled`](<_notes/luma.oled.md>)
+
+#### `RPi.GPIO`
+
+- Python module `RPi.GPIO` is required for the following cases.
+  - The OLED display is connected via SPI
+  - Buttons are connected via GPIO
+- For the details, see:
+  - [`RPi.GPIO`](<_notes/RPi.GPIO.md>)
+
+#### `pyserial`
+
+- Python module `pyserial` is required for the following cases.
+  - micro:bit device is connected via USB
+- For the details, see:
+  - [`pyserial`](<_notes/pyserial.md>)
 
 ## Source Code Examples
 
@@ -153,14 +172,4 @@
 
 ## Technical Notes
 
-### User Service (`systemd`)
-
-- The following user service is used for `disp-mon`.
-  - [disp_mon.service](disp_mon.service)
-
-- Run the command below to show the logging for the service.
-
-```shell
-$ journalctl --no-pager -b --user -u disp_mon
-:
-```
+- [User Service (`systemd`)](./_notes/systemd.md)

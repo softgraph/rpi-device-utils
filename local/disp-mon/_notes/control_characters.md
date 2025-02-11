@@ -257,26 +257,35 @@
 ### Standards
 
 - ecma-international.org
-  - [ECMA-6](<https://ecma-international.org/publications-and-standards/standards/ecma-6/>)
-    - 7-Bit coded Character Set
-    - ISO/IEC number: 646
-    - ITU number: T.50
-    - [ECMA-6 6th Edition](<https://ecma-international.org/wp-content/uploads/ECMA-6_6th_edition_december_1991.pdf>)
-  - [ECMA-35](<https://ecma-international.org/publications-and-standards/standards/ecma-35/>)
-    - Character code structure and extension techniques
-    - ISO/IEC number: 2022
-    - [ECMA-35 6th Edition](<https://ecma-international.org/wp-content/uploads/ECMA-35_6th_edition_december_1994.pdf>)
-  - [ECMA-48](<https://ecma-international.org/publications-and-standards/standards/ecma-48/>)
-    - Control functions for coded character sets
-    - ISO/IEC number: 6429
-    - [ECMA-48 Fifth Edition](<https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf>)
+  - [Standards](<https://ecma-international.org/publications-and-standards/standards/>)
+    - [ECMA-6](<https://ecma-international.org/publications-and-standards/standards/ecma-6/>)
+      - 7-Bit coded Character Set
+      - ISO/IEC number: 646
+      - ITU number: T.50
+      - [ECMA-6 6th Edition](<https://ecma-international.org/wp-content/uploads/ECMA-6_6th_edition_december_1991.pdf>)
+    - [ECMA-35](<https://ecma-international.org/publications-and-standards/standards/ecma-35/>)
+      - Character code structure and extension techniques
+      - ISO/IEC number: 2022
+      - [ECMA-35 6th Edition](<https://ecma-international.org/wp-content/uploads/ECMA-35_6th_edition_december_1994.pdf>)
+    - [ECMA-48](<https://ecma-international.org/publications-and-standards/standards/ecma-48/>)
+      - Control functions for coded character sets
+      - ISO/IEC number: 6429
+      - [ECMA-48 Fifth Edition](<https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf>)
 
 ### Explanations
 
 - aivosto.com
-  - [Control characters in ASCII and Unicode](<https://www.aivosto.com/articles/control-characters.html>)
+  - [Articles for developers](<https://www.aivosto.com/articles.html>)
+    - [Control characters in ASCII and Unicode](<https://www.aivosto.com/articles/control-characters.html>)
 
 ### Examples
 
 - compuprint.com
-  - [Compuprint 9060-LA Compuprint 9070-LA Programmer’s Manual](<https://www.compuprint.com/docs/archive/9060-70-LA-pm.pdf>)
+  - [Compuprint 9060LA](<https://www.compuprint.com/page.php?id=54&tipo=prodotti&lang=EN>)
+  - [Compuprint 9070LA](<https://www.compuprint.com/page.php?id=56&tipo=prodotti&lang=EN>)
+    - [Compuprint 9060LA 9070LA](<https://www.compuprint.com/us/_datasheet/archive/Compuprint9060-70LAen.pdf>)
+      - [Compuprint 9060-LA 9070-LA Programmer’s Manual](<https://www.compuprint.com/docs/archive/9060-70-LA-pm.pdf>)
+- vt100.net
+  - [DEC Documents in HTML](<https://vt100.net/docs/>)
+    - [VT510 Video Terminal Programmer Information](<https://vt100.net/docs/vt510-rm/contents.html>)
+      - [4. ANSI Control Functions Summary](<https://vt100.net/docs/vt510-rm/chapter4.html>)

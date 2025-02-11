@@ -9,5 +9,9 @@
         "allowed_elements": [
 			"a"
 		]
-	}
+	},
+
+	// MD038 - Spaces inside code span elements
+    // https://github.com/DavidAnson/markdownlint/blob/main/doc/md038.md
+	"no-space-in-code": false
 }
